@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lusitanie — Magazine de la diaspora lusophone</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --noir: #0e0c0a; --blanc: #faf8f4; --rouge: #b5281c;
+    --or: #c9a84c; --gris: #6b6560; --gris-clair: #e8e4dc;
+  }
+  body { background: var(--noir); color: var(--blanc); font-family: 'Josefin Sans', sans-serif; overflow-x: hidden; }
+  body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; }
+  .site-header { border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0 2rem; }
+  .header-top { display:flex; align-items:center; justify-content:space-between; padding:1rem 0 0.8rem; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .header-meta { font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gris); }
+  .header-social { display:flex; gap:1.2rem; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; }
+  .header-social a { color:var(--gris); text-decoration:none; transition:color 0.2s; }
+  .header-social a:hover { color:var(--or); }
+  .masthead { text-align:center; padding:2.5rem 0 2rem; }
+  .masthead-eyebrow { font-size:0.55rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--or); margin-bottom:1rem; }
+  .masthead-logo { font-family:'Cormorant Garamond',serif; font-size:clamp(3.5rem,10vw,7rem); font-weight:700; letter-spacing:0.15em; line-height:1; color:var(--blanc); text-transform:uppercase; animation: fadeIn 0.7s ease both; }
+  .masthead-logo span { color:var(--rouge); }
+  .masthead-rule { display:flex; align-items:center; gap:1rem; justify-content:center; margin:1.2rem 0; }
+  .masthead-rule::before, .masthead-rule::after { content:''; width:80px; height:1px; background:var(--or); opacity:0.5; }
+  .masthead-rule-dot { width:5px; height:5px; border-radius:50%; background:var(--or); }
+  .nav-rubriques { display:flex; justify-content:center; border-top:1px solid rgba(255,255,255,0.08); }
+  .nav-rubriques a { font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gris); text-decoration:none; padding:0.85rem 1.5rem; border-right:1px solid rgba(255,255,255,0.08); transition:color 0.2s, background 0.2s; }
+  .nav-rubriques a:first-child { border-left:1px solid rgba(255,255,255,0.08); }
+  .nav-rubriques a:hover { color:var(--blanc); background:rgba(255,255,255,0.04); }
+  .nav-rubriques a.active { color:var(--or); }
+  .hero-feature { display:grid; grid-template-columns:1fr 1fr; min-height:520px; border-bottom:1px solid rgba(255,255,255,0.08); animation: fadeIn 0.7s 0.15s ease both; }
+  .hero-visual { background:linear-gradient(135deg,#1a0f0a 0%,#2d1810 40%,#1a0a0a 100%); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .hero-visual::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%, rgba(181,40,28,0.15) 0%, transparent 70%); }
+  .hero-visual-text { font-family:'Cormorant Garamond',serif; font-size:clamp(5rem,12vw,10rem); font-style:italic; color:rgba(255,255,255,0.06); line-height:1; user-select:none; }
+  .hero-visual-tag { position:absolute; bottom:2rem; left:2rem; font-size:0.52rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--rouge); background:rgba(181,40,28,0.15); border:1px solid rgba(181,40,28,0.3); padding:0.3rem 0.8rem; }
+  .hero-content { padding:3.5rem 3rem; display:flex; flex-direction:column; justify-content:center; border-left:1px solid rgba(255,255,255,0.08); }
+  .article-rubrique { font-size:0.52rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--or); margin-bottom:1.2rem; }
+  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3.5vw,3rem); font-weight:600; line-height:1.15; margin-bottom:1.2rem; color:var(--blanc); }
+  .hero-title em { font-style:italic; color:rgba(255,255,255,0.7); }
+  .hero-excerpt { font-size:0.82rem; line-height:1.8; color:rgba(255,255,255,0.5); margin-bottom:2rem; font-weight:300; }
+  .read-link { display:inline-flex; align-items:center; gap:0.6rem; font-size:0.55rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--blanc); text-decoration:none; border-bottom:1px solid var(--rouge); padding-bottom:0.2rem; transition:color 0.2s, border-color 0.2s; width:fit-content; }
+  .read-link:hover { color:var(--or); border-color:var(--or); }
+  .read-link::after { content:'→'; }
+  .section-label { padding:2rem 2rem 0; display:flex; align-items:center; gap:1.5rem; }
+  .section-label-text { font-size:0.52rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gris); white-space:nowrap; }
+  .section-label-line { flex:1; height:1px; background:rgba(255,255,255,0.08); }
+  .articles-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid rgba(255,255,255,0.08); margin-top:1.5rem; animation: fadeIn 0.7s 0.35s ease both; }
+  .article-card { padding:2rem; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); text-decoration:none; color:inherit; display:block; transition:background 0.2s; position:relative; }
+  .article-card:nth-child(3n) { border-right:none; }
+  .article-card:hover { background:rgba(255,255,255,0.03); }
+  .article-card:hover .card-title { color:var(--or); }
+  .article-card.placeholder { opacity:0.35; cursor:default; pointer-events:none; }
+  .placeholder-badge { position:absolute; top:1rem; right:1rem; font-size:0.45rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gris); border:1px solid rgba(255,255,255,0.1); padding:0.2rem 0.5rem; }
+  .card-rubrique { font-size:0.5rem; letter-spacing:0.35em; text-transform:uppercase; margin-bottom:0.9rem; }
+  .card-rubrique.musique { color:var(--rouge); }
+  .card-rubrique.football { color:#4a9eff; }
+  .card-rubrique.culture { color:var(--or); }
+  .card-rubrique.diaspora { color:#7ec89a; }
+  .card-title { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:600; line-height:1.3; margin-bottom:0.8rem; color:var(--blanc); transition:color 0.2s; }
+  .card-excerpt { font-size:0.75rem; line-height:1.75; color:rgba(255,255,255,0.4); font-weight:300; margin-bottom:1.2rem; }
+  .card-meta { font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.25); display:flex; align-items:center; gap:0.5rem; }
+  .card-meta-dot { width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.2); }
+  .quote-band { border-top:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); padding:3.5rem 2rem; text-align:center; background:rgba(181,40,28,0.05); }
+  .quote-band-text { font-family:'Cormorant Garamond',serif; font-size:clamp(1.2rem,3vw,2rem); font-style:italic; color:rgba(255,255,255,0.65); max-width:650px; margin:0 auto 1rem; line-height:1.5; }
+  .quote-band-attr { font-size:0.52rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gris); }
+  footer { padding:2.5rem 2rem; border-top:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+  .footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; letter-spacing:0.1em; }
+  .footer-logo span { color:var(--rouge); }
+  .footer-copy { font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gris); }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @media (max-width:768px) {
+    .hero-feature { grid-template-columns:1fr; }
+    .hero-visual { min-height:200px; }
+    .hero-content { padding:2rem 1.5rem; border-left:none; border-top:1px solid rgba(255,255,255,0.08); }
+    .articles-grid { grid-template-columns:1fr; }
+    .article-card { border-right:none; }
+    .nav-rubriques { flex-wrap:wrap; }
+    .nav-rubriques a { flex:1; text-align:center; min-width:80px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <div class="header-meta">Magazine · Diaspora Lusophone · Europe</div>
+    <div class="header-social">
+      <a href="https://facebook.com/lusitanie" target="_blank">Facebook</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+  <div class="masthead">
+    <div class="masthead-eyebrow">Magazine de la diaspora lusophone</div>
+    <div class="masthead-logo">LUSI<span>TANIE</span></div>
+    <div class="masthead-rule"><div class="masthead-rule-dot"></div></div>
+  </div>
+  <nav class="nav-rubriques">
+    <a href="#" class="active">Tout</a>
+    <a href="#">Musique</a>
+    <a href="#">Football</a>
+    <a href="#">Culture</a>
+    <a href="#">Diaspora</a>
+  </nav>
+</header>
+
+<section class="hero-feature">
+  <div class="hero-visual">
+    <div class="hero-visual-text">♪</div>
+    <div class="hero-visual-tag">À la une · Musique</div>
+  </div>
+  <div class="hero-content">
+    <div class="article-rubrique">Chronique Musicale · Grand Format</div>
+    <h2 class="hero-title">Salvador Sobral, ou <em>l'art d'aimer à voix nue</em></h2>
+    <p class="hero-excerpt">En mai 2017, un jeune Portugais s'avançait sur la scène d'Eurovision avec rien d'autre qu'une chanson et une voix. Ce soir-là, l'Europe s'est tue. Ce soir-là, le Portugal gagnait pour la première fois.</p>
+    <a href="salvador-sobral.html" class="read-link">Lire l'article</a>
+  </div>
+</section>
+
+<div class="section-label">
+  <span class="section-label-text">Prochains articles</span>
+  <div class="section-label-line"></div>
+</div>
+
+<div class="articles-grid">
+  <div class="article-card placeholder">
+    <div class="placeholder-badge">À venir</div>
+    <div class="card-rubrique football">Football</div>
+    <div class="card-title">La Seleção et la génération dorée — ce que le Mondial 2026 peut encore écrire</div>
+    <p class="card-excerpt">Cinquante ans après la révolution des Œillets, le football portugais s'apprête à vivre son rendez-vous le plus attendu.</p>
+    <div class="card-meta"><span>Football</span><span class="card-meta-dot"></span><span>Grand Format</span></div>
+  </div>
+  <div class="article-card placeholder">
+    <div class="placeholder-badge">À venir</div>
+    <div class="card-rubrique culture">Culture</div>
+    <div class="card-title">Mimicat et la nouvelle scène portugaise — une génération sans complexes</div>
+    <p class="card-excerpt">Entre pop urbaine, fado revisité et influences afro-lusitaniennes, une nouvelle génération d'artistes redessine les contours de la musique portugaise.</p>
+    <div class="card-meta"><span>Culture</span><span class="card-meta-dot"></span><span>Musique</span></div>
+  </div>
+  <div class="article-card placeholder">
+    <div class="placeholder-badge">À venir</div>
+    <div class="card-rubrique diaspora">Diaspora</div>
+    <div class="card-title">Vivre entre deux langues — portraits de la diaspora lusophone en France</div>
+    <p class="card-excerpt">Ils sont nés ici, ont grandi là-bas dans leurs imaginations, et parlent portugais à la maison. Portraits de ceux qui habitent l'entre-deux.</p>
+    <div class="card-meta"><span>Diaspora</span><span class="card-meta-dot"></span><span>Portraits</span></div>
+  </div>
+</div>
+
+<div class="quote-band">
+  <p class="quote-band-text">« Saudade — ce mot que nulle autre langue n'a su traduire, et que nous portons comme une seconde nationalité. »</p>
+  <div class="quote-band-attr">Lusitanie · Magazine de la diaspora</div>
+</div>
+
+<footer>
+  <div class="footer-logo">LUSI<span>TANIE</span></div>
+  <div class="footer-copy">© 2025 Lusitanie · FR · BE · CH · LU</div>
+</footer>
+
+</body>
+</html>

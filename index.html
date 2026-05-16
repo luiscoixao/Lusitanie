@@ -47,9 +47,11 @@
   .section-label { padding:2rem 2rem 0; display:flex; align-items:center; gap:1.5rem; }
   .section-label-text { font-size:0.52rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gris); white-space:nowrap; }
   .section-label-line { flex:1; height:1px; background:rgba(255,255,255,0.08); }
-  .articles-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid rgba(255,255,255,0.08); margin-top:1.5rem; animation: fadeIn 0.7s 0.35s ease both; }
-  .article-card { padding:2rem; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); text-decoration:none; color:inherit; display:block; transition:background 0.2s; position:relative; }
-  .article-card:nth-child(3n) { border-right:none; }
+  .articles-grid { display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid rgba(255,255,255,0.08); margin-top:1.5rem; animation: fadeIn 0.7s 0.35s ease both; }
+  .article-card { border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); text-decoration:none; color:inherit; display:block; transition:background 0.2s; position:relative; overflow:hidden; }
+  .article-card:nth-child(2n) { border-right:none; }
+  .card-img { width:100%; height:180px; object-fit:cover; display:block; }
+  .card-body { padding:1.5rem; }
   .article-card:hover { background:rgba(255,255,255,0.03); }
   .article-card:hover .card-title { color:var(--or); }
   .article-card.placeholder { opacity:0.35; cursor:default; pointer-events:none; }
@@ -106,8 +108,10 @@
   </nav>
 </header>
 
-<section class="hero-feature" style="grid-template-columns:1fr;">
-  <div class="hero-content" style="border-left:none;">
+<section class="hero-feature" style="grid-template-columns:1fr 1fr;">
+  <div class="hero-visual" style="background-image:url('https://res.cloudinary.com/dzq4osfub/image/upload/q_auto/f_auto/v1778940406/IMG_0927_tvoh1z.jpg');background-size:cover;background-position:center;">
+  </div>
+  <div class="hero-content">
     <div class="article-rubrique">Diaspora · Grand Format</div>
     <h2 class="hero-title">Mémoire d'exils — <em>ce qui reste quand on part</em></h2>
     <p class="hero-excerpt">Derrière chaque départ, une déchirure discrète mais tenace. L'histoire de l'immigration portugaise traversée par cette blessure qui ne se dit pas toujours — et qui traverse pourtant les générations.</p>
@@ -122,16 +126,22 @@
 
 <div class="articles-grid">
   <a href="selecao-2026.html" class="article-card">
-    <div class="card-rubrique football">Football</div>
-    <div class="card-title">La Seleção et nous — ce que le Mondial nous doit encore</div>
-    <p class="card-excerpt">Dans un mois, le Portugal entre en lice. Pour ceux qui vivent loin, ce tournoi n'est pas seulement sportif. C'est un rendez-vous avec une part de soi-même.</p>
-    <div class="card-meta"><span>Football</span><span class="card-meta-dot"></span><span>Grand Format</span></div>
+    <img class="card-img" src="https://res.cloudinary.com/dzq4osfub/image/upload/q_auto/f_auto/v1778936154/phonto_ymm3rx.jpg" alt="La Seleção 2026">
+    <div class="card-body">
+      <div class="card-rubrique football">Football</div>
+      <div class="card-title">La Seleção et nous — ce que le Mondial nous doit encore</div>
+      <p class="card-excerpt">Dans un mois, le Portugal entre en lice. Pour ceux qui vivent loin, ce tournoi n'est pas seulement sportif.</p>
+      <div class="card-meta"><span>Football</span><span class="card-meta-dot"></span><span>Grand Format</span></div>
+    </div>
   </a>
   <a href="salvador-sobral.html" class="article-card">
-    <div class="card-rubrique musique">Musique</div>
-    <div class="card-title">Salvador Sobral, ou l'art d'aimer à voix nue</div>
-    <p class="card-excerpt">En mai 2017, un jeune Portugais s'avançait sur la scène d'Eurovision avec rien d'autre qu'une chanson et une voix. Ce soir-là, l'Europe s'est tue.</p>
-    <div class="card-meta"><span>Chronique Musicale</span><span class="card-meta-dot"></span><span>Grand Format</span></div>
+    <img class="card-img" src="https://img.youtube.com/vi/ymFVfzu-2mw/maxresdefault.jpg" alt="Salvador Sobral — Amar pelos dois">
+    <div class="card-body">
+      <div class="card-rubrique musique">Musique</div>
+      <div class="card-title">Salvador Sobral, ou l'art d'aimer à voix nue</div>
+      <p class="card-excerpt">En mai 2017, un jeune Portugais s'avançait sur la scène d'Eurovision avec rien d'autre qu'une chanson et une voix.</p>
+      <div class="card-meta"><span>Chronique Musicale</span><span class="card-meta-dot"></span><span>Grand Format</span></div>
+    </div>
   </a>
 </div>
 

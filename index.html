@@ -88,10 +88,10 @@
 
 <header class="site-header">
   <div class="header-top">
-    <div class="header-meta">LE MAGAZINE FRANCOPHONE DE LA CULTURE PORTUGAISE ET LUSOPHONE</div>
+    <div class="header-meta">Blog</div>
     <div class="header-social">
       <a href="https://facebook.com/lusitanie" target="_blank">Facebook</a>
-      <a href="#">Instagram</a>
+      <a href="https://instagram.com/lusitanie.blog" target="_blank">Instagram</a>
     </div>
   </div>
   <div class="masthead">
@@ -100,13 +100,23 @@
     <div class="masthead-rule"><div class="masthead-rule-dot"></div></div>
   </div>
   <nav class="nav-rubriques">
-    <a href="#" class="active">Tout</a>
-    <a href="#">Musique</a>
-    <a href="#">Football</a>
-    <a href="#">Culture</a>
-    <a href="#">Diaspora</a>
+    <a href="#" class="active" onclick="filterCards('tout');return false;">Tout</a>
+    <a href="#" onclick="filterCards('musique');return false;">Musique</a>
+    <a href="#" onclick="filterCards('football');return false;">Football</a>
+    <a href="#" onclick="filterCards('culture');return false;">Culture</a>
+    <a href="#" onclick="filterCards('diaspora');return false;">Diaspora</a>
   </nav>
 </header>
+
+<script>
+function filterCards(cat) {
+  document.querySelectorAll('.nav-rubriques a').forEach(a => a.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.article-card[data-cat]').forEach(card => {
+    card.style.display = (cat === 'tout' || card.dataset.cat === cat) ? 'block' : 'none';
+  });
+}
+</script>
 
 <section class="hero-feature" style="grid-template-columns:1fr 1fr;">
   <div class="hero-visual" style="background-image:url('https://res.cloudinary.com/dzq4osfub/image/upload/q_auto/f_auto/v1778940406/IMG_0927_tvoh1z.jpg');background-size:cover;background-position:center;">
@@ -125,7 +135,7 @@
 </div>
 
 <div class="articles-grid">
-  <a href="selecao-2026.html" class="article-card">
+  <a href="selecao-2026.html" class="article-card" data-cat="football">
     <img class="card-img" src="https://res.cloudinary.com/dzq4osfub/image/upload/q_auto/f_auto/v1778936154/phonto_ymm3rx.jpg" alt="La Seleção 2026">
     <div class="card-body">
       <div class="card-rubrique football">Football</div>
@@ -134,7 +144,7 @@
       <div class="card-meta"><span>Football</span><span class="card-meta-dot"></span><span>Grand Format</span></div>
     </div>
   </a>
-  <a href="salvador-sobral.html" class="article-card">
+  <a href="salvador-sobral.html" class="article-card" data-cat="musique">
     <img class="card-img" src="https://img.youtube.com/vi/ymFVfzu-2mw/maxresdefault.jpg" alt="Salvador Sobral — Amar pelos dois">
     <div class="card-body">
       <div class="card-rubrique musique">Musique</div>

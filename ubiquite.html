@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le don d'ubiquité — Lusitanie</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #f5f0e8;
+    --ink: #1a1410;
+    --rouge: #c0392b;
+    --or: #b8960c;
+    --gris: #7a7268;
+    --pale: #ede8de;
+    --ocean: #0d2233;
+  }
+
+  body { background: var(--cream); color: var(--ink); font-family: 'IM Fell English', Georgia, serif; min-height: 100vh; overflow-x: hidden; }
+
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.6; }
+
+  .masthead { border-bottom: 3px double var(--ink); padding: 1.2rem 2rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .masthead-brand { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gris); }
+  .masthead-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 6vw, 3.8rem); font-weight: 900; letter-spacing: -0.02em; text-align: center; line-height: 1; }
+  .masthead-title span { color: var(--rouge); }
+  .masthead-date { font-family: 'Space Mono', monospace; font-size: 0.6rem; text-align: right; color: var(--gris); letter-spacing: 0.15em; text-transform: uppercase; }
+
+  .rubrique { text-align: center; padding: 1.4rem 2rem 0; }
+  .rubrique-label { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; background: var(--ocean); color: var(--cream); padding: 0.25rem 0.9rem; }
+
+  .hero { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 1rem; text-align: center; }
+  .hero-kicker { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rouge); margin-bottom: 1.4rem; animation: fadeUp 0.6s ease both; }
+  .hero-headline { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 6vw, 4.4rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 1.6rem; animation: fadeUp 0.6s 0.15s ease both; }
+  .hero-headline em { font-style: italic; color: var(--rouge); }
+  .hero-deck { font-family: 'IM Fell English', serif; font-size: 1.18rem; line-height: 1.7; color: var(--gris); font-style: italic; max-width: 580px; margin: 0 auto 2.5rem; animation: fadeUp 0.6s 0.3s ease both; }
+
+  .ornament { display: flex; align-items: center; gap: 1.2rem; justify-content: center; margin: 2rem 0; color: var(--or); }
+  .ornament::before, .ornament::after { content: ''; flex: 1; max-width: 120px; height: 1px; }
+  .ornament::before { background: linear-gradient(to right, transparent, var(--or)); }
+  .ornament::after { background: linear-gradient(to left, transparent, var(--or)); }
+  .ornament-symbol { font-size: 1.1rem; letter-spacing: 0.4em; }
+
+  .pull-giant { background: var(--ocean); color: var(--cream); padding: 3rem 2rem; text-align: center; margin: 3rem 0; }
+  .pull-giant-text { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2.5vw, 1.7rem); font-style: italic; line-height: 1.5; max-width: 600px; margin: 0 auto 1.2rem; hyphens: none; }
+  .pull-giant-text em { color: var(--or); font-style: normal; }
+  .pull-giant-attr { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+  .article-body { max-width: 780px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  .byline { display: flex; align-items: center; gap: 1.5rem; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 0.8rem 0; margin-bottom: 2.5rem; }
+  .byline-text { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gris); }
+  .byline-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--rouge); flex-shrink: 0; }
+
+  p { font-size: 1.05rem; line-height: 1.85; margin-bottom: 1.4rem; text-align: justify; hyphens: auto; }
+  p:first-of-type::first-letter { font-family: 'Playfair Display', serif; font-size: 4.2rem; font-weight: 900; float: left; line-height: 0.8; margin: 0.12em 0.1em 0 0; color: var(--rouge); }
+
+  h2 { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 700; font-style: italic; margin: 2.8rem 0 1rem; border-bottom: 1px solid var(--pale); padding-bottom: 0.5rem; }
+
+  .chiffre-box { background: var(--ocean); color: var(--cream); padding: 2rem; margin: 2.5rem 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: center; }
+  .chiffre-item-number { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: var(--or); line-height: 1; margin-bottom: 0.4rem; }
+  .chiffre-item-label { font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); line-height: 1.4; }
+
+  .pull-quote { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 1.8rem 0; margin: 2.5rem 0; text-align: center; }
+  .pull-quote p { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-style: italic; line-height: 1.5; text-align: center; margin-bottom: 0; }
+  .pull-quote p::first-letter { float: none; font-size: inherit; color: inherit; margin: 0; }
+
+  .payhip-bloc { max-width: 780px; margin: 0 auto 2rem; padding: 0 2rem; }
+  .payhip-inner { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 2.5rem 0; text-align: center; }
+  .payhip-label { font-family: 'Space Mono', monospace; font-size: 0.52rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--or); margin-bottom: 1rem; }
+  .payhip-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-style: italic; color: var(--ink); margin-bottom: 0.6rem; line-height: 1.4; }
+  .payhip-desc { font-family: 'IM Fell English', Georgia, serif; font-size: 0.85rem; color: var(--gris); margin-bottom: 1.8rem; line-height: 1.6; }
+  .payhip-btn { display: inline-block; background: var(--ink); color: #faf5ec; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 0.9rem 2.5rem; text-decoration: none; }
+
+  footer { border-top: 3px double var(--ink); padding: 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  footer .brand { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; }
+  footer .brand span { color: var(--rouge); }
+  footer .back { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gris); text-decoration: none; }
+  footer .back:hover { color: var(--ink); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 640px) {
+    .masthead { flex-direction: column; text-align: center; }
+    .masthead-date { text-align: center; }
+    .chiffre-box { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":
+new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
+"https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,"script","dataLayer","GTM-KBSPNMDP");</script>
+<!-- End Google Tag Manager -->
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0E4SEHN0TT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-0E4SEHN0TT");
+</script>
+<!-- End Google Analytics GA4 -->
+
+<header class="masthead">
+  <div class="masthead-brand">Histoire · Diaspora · Monde</div>
+  <div class="masthead-title">LUSI<span>TANIE</span></div>
+  <div class="masthead-date">2026</div>
+</header>
+
+<div class="rubrique">
+  <span class="rubrique-label">Histoire · Grand Format</span>
+</div>
+
+
+<div style="width:100%;max-height:480px;overflow:hidden;">
+  <img src="https://res.cloudinary.com/dzq4osfub/image/upload/q_auto/f_auto/v1779022832/IMG_1251_cn3ih9.jpg" alt="Le don d'ubiquité — Portugal" style="width:100%;height:480px;object-fit:cover;object-position:center;display:block;">
+</div>
+
+<section class="hero">
+  <div class="hero-kicker">Portugal · 10 millions d'habitants · 300 millions de locuteurs</div>
+  <h1 class="hero-headline">
+    Le don<br>d'<em>ubiquité</em>
+  </h1>
+  <p class="hero-deck">
+    Ils sont dix millions sur leur territoire. Ils sont partout ailleurs. Comment un si petit pays a-t-il pu laisser une empreinte si démesurée sur le monde ?
+  </p>
+</section>
+
+<div class="pull-giant">
+  <p class="pull-giant-text">
+    « Le Portugal est trop petit pour ses <em>ambitions</em> et trop grand pour ses frontières. »
+  </p>
+  <div class="pull-giant-attr">— Lusitanie · 2026</div>
+</div>
+
+<div class="article-body">
+
+  <div class="byline">
+    <span class="byline-text">Lusitanie</span>
+    <span class="byline-dot"></span>
+    <span class="byline-text">Histoire · Diaspora</span>
+    <span class="byline-dot"></span>
+    <span class="byline-text">Grand Format</span>
+  </div>
+
+  <div class="ornament"><span class="ornament-symbol">✦ ✦ ✦</span></div>
+
+  <p>
+    Regardez un planisphère. Cherchez le Portugal — ce petit rectangle à l'extrémité occidentale de l'Europe, coincé entre l'Espagne et l'Atlantique. Moins de 92 000 kilomètres carrés. Dix millions d'habitants. Et pourtant : au Brésil, en Angola, au Mozambique, au Cap-Vert, en Goa, à Macao, à Timor, dans les rues de Paris, de Lyon, de Montréal, de Newark — partout, des traces indélébiles. Des noms de lieux, des mots entrés dans d'autres langues, des millions de personnes qui portent dans leurs veines quelque chose de cette terre étroite et tenace.
+  </p>
+
+  <p>
+    Ce n'est pas une coïncidence historique. C'est une vocation.
+  </p>
+
+  <div class="chiffre-box">
+    <div>
+      <div class="chiffre-item-number">10M</div>
+      <div class="chiffre-item-label">Habitants au Portugal</div>
+    </div>
+    <div>
+      <div class="chiffre-item-number">300M</div>
+      <div class="chiffre-item-label">Locuteurs du portugais dans le monde</div>
+    </div>
+    <div>
+      <div class="chiffre-item-number">5M+</div>
+      <div class="chiffre-item-label">Portugais vivant à l'étranger</div>
+    </div>
+  </div>
+
+  <h2>Les Grandes Découvertes — quand un peuple décide de tout risquer</h2>
+
+  <p>
+    Tout commence au XVe siècle. Le Portugal est alors une nation pauvre, à la marge de l'Europe, sans les ressources des grands royaumes continentaux. Ce qu'il possède, en revanche, c'est une façade atlantique, des marins aguerris, et une obsession : trouver une route vers les épices d'Orient sans passer par les routes terrestres contrôlées par d'autres. L'infant Dom Henrique — Henri le Navigateur — en fait une entreprise nationale.
+  </p>
+
+  <p>
+    En moins d'un siècle, les caravelles portugaises contournent l'Afrique, atteignent l'Inde, le Brésil, le Japon, la Chine. Vasco de Gama ouvre la route des Indes en 1498. Pedro Álvares Cabral prend pied au Brésil en 1500. Fernão de Magalhães — connu en français sous le nom de Magellan — initie la première circumnavigation du globe en 1519. Un pays de dix millions d'âmes, selon les estimations de l'époque bien moins, trace les premières lignes de la mondialisation.
+  </p>
+
+  <h2>La langue comme empire invisible</h2>
+
+  <p>
+    Les empires militaires finissent par s'effondrer. Les empires linguistiques, eux, résistent. Quand le Portugal perd ses colonies au XXe siècle, la langue reste. Le portugais est aujourd'hui la cinquième langue la plus parlée au monde, avec plus de 300 millions de locuteurs. C'est la langue officielle de neuf pays sur quatre continents — du Brésil à l'Angola, du Mozambique au Cap-Vert, de São Tomé à la Guinée-Bissau, de l'Angola au Timor-Oriental.
+  </p>
+
+  <p>
+    Cette projection linguistique est sans équivalent pour un pays de cette taille. L'espagnol est porté par l'Espagne et vingt nations hispanophones. Le portugais, lui, est porté par un seul pays européen de dix millions d'habitants — et par le Brésil, qui en compte deux cents millions. C'est une asymétrie vertigineuse, et une forme d'immortalité.
+  </p>
+
+  <div class="pull-quote">
+    <p>« Les empires militaires finissent par s'effondrer. Les empires linguistiques, eux, résistent. »</p>
+  </div>
+
+  <h2>L'émigration — la deuxième vague de conquête</h2>
+
+  <p>
+    Si les Grandes Découvertes ont projeté le Portugal vers le monde par la mer, l'émigration des XIXe et XXe siècles l'a projeté par la terre — ou plutôt par les trains, les camions, les avions bondés. Des milliers de Portugais quittent leur pays pour la France, le Luxembourg, l'Allemagne, la Suisse, le Canada. Pas pour conquérir — pour survivre, pour construire, pour envoyer de l'argent à ceux restés au village.
+  </p>
+
+  <p>
+    Ces migrations ont créé des communautés extraordinairement tenaces. À Paris, dans les banlieues lyonnaises, dans les villes luxembourgeoises, les Portugais ont reconstruit quelque chose — des associations, des clubs sportifs, des épiceries, des églises. Pas par nostalgie figée, mais par besoin de continuité. La communauté portugaise de France est aujourd'hui l'une des plus importantes d'Europe — un million et demi de personnes, selon les estimations, sur deux ou trois générations.
+  </p>
+
+  <h2>La nouvelle émigration — les cerveaux partis</h2>
+
+  <p>
+    Après la crise économique de 2008, une autre vague s'est formée. Plus diplômée, plus mobile, plus connectée. Des ingénieurs, des médecins, des architectes, des entrepreneurs partis vers Londres, Genève, Toronto, Berlin. Cette émigration-là ne ressemble pas à celle des années 1960 — elle ne fuit pas la misère, elle cherche l'opportunité. Mais elle partage avec la précédente cette même disposition à s'installer ailleurs sans se dissoudre, à réussir sans oublier.
+  </p>
+
+  <p>
+    Le Portugal saigne de ses talents depuis des décennies. C'est une douleur nationale, un paradoxe douloureux : ce peuple a toujours été meilleur à l'exportation qu'à la rétention. Mais c'est aussi ce qui explique pourquoi les Portugais réussissent partout où ils s'installent — ils arrivent avec cette double culture de l'effort et de l'adaptation, forgée sur plusieurs générations.
+  </p>
+
+  <h2>Ce que ça dit de qui ils sont</h2>
+
+  <p>
+    Il y a quelque chose dans le caractère portugais — cette combinaison de discrétion et de résistance, de modestie et d'ambition contenue — qui prédispose à l'ubiquité. Le Portugais ne fait pas de bruit en arrivant quelque part. Il observe, s'adapte, s'intègre. Et puis, discrètement, il s'impose. Il construit. Il dure.
+  </p>
+
+  <p>
+    Ce n'est pas de la passivité. C'est une stratégie millénaire, héritée de siècles d'existence à la frontière de l'Europe, entre la terre et l'océan, entre la sécurité et l'inconnu. Un peuple qui a appris très tôt que survivre demande plus que de la force — ça demande de la souplesse, de la patience, et cette capacité rare à se sentir chez soi là où les autres ne font que passer.
+  </p>
+
+  <p>
+    Ils sont peu nombreux. Et ils sont partout. Voilà pourquoi.
+  </p>
+
+  <div class="ornament"><span class="ornament-symbol">✦ ✦ ✦</span></div>
+
+</div>
+
+<!-- Bloc Payhip -->
+<div class="payhip-bloc">
+  <div class="payhip-inner">
+    <div class="payhip-label">✦ À lire · Histoire du Portugal</div>
+    <p class="payhip-title">Portugal — Là où finit la terre, là où commence l'horizon</p>
+    <p class="payhip-desc">De la préhistoire aux grandes découvertes, de Salazar à la diaspora contemporaine — l'histoire complète d'un peuple qui a toujours regardé au-delà.</p>
+    <a href="https://payhip.com/Lusitanie" target="_blank" class="payhip-btn">Découvrir →</a>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="back">← Retour à l'accueil</a>
+  <div class="brand">LUSI<span>TANIE</span></div>
+</footer>
+
+<!-- Bouton Lusia -->
+<a href="https://lusia.help" target="_blank" title="Parler à Lusia — Assistante IA Portugal" style="position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;border-radius:50%;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;z-index:999;border:2px solid rgba(255,255,255,0.2);transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663424594289/VxCaRJwncEnpMSGwixa2Gk/lusia_avatar-FKpFEws4VdjoQ5D8KNYx2i.webp" alt="Lusia" style="width:100%;height:100%;object-fit:cover;">
+</a>
+
+</body>
+</html>

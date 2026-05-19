@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lusitanie.blog/sitemap.xml

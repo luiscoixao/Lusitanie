@@ -27,7 +27,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .hero{max-width:860px;margin:0 auto;padding:3rem 2rem 1rem;text-align:center;}
 .hero-kicker{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--rouge);margin-bottom:1.4rem;animation:fadeUp 0.6s ease both;}
 .hero-headline{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,6vw,4.4rem);font-weight:900;line-height:1.08;letter-spacing:-0.02em;margin-bottom:1.6rem;animation:fadeUp 0.6s 0.15s ease both;}
-.hero-headline em{font-style:italic;color:var(--mauve);}
+.hero-headline em{font-style:italic;color:var(--rouge);}
 .hero-deck{font-family:'IM Fell English',serif;font-size:1.18rem;line-height:1.7;color:var(--gris);font-style:italic;max-width:580px;margin:0 auto 2.5rem;animation:fadeUp 0.6s 0.3s ease both;}
 .ornament{display:flex;align-items:center;gap:1.2rem;justify-content:center;margin:2rem 0;color:var(--or);}
 .ornament::before,.ornament::after{content:'';flex:1;max-width:120px;height:1px;}
@@ -35,7 +35,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .ornament::after{background:linear-gradient(to left,transparent,var(--or));}
 .ornament-symbol{font-size:1.1rem;letter-spacing:0.4em;}
 .pull-giant{background:var(--mauve);color:var(--cream);padding:3rem 2rem;text-align:center;margin:3rem 0;}
-.pull-giant-text{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.7rem);font-style:italic;line-height:1.5;max-width:600px;margin:0 auto 1.2rem;hyphens:none;}
+.pull-giant-text{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.7rem);font-style:italic;line-height:1.5;max-width:600px;margin:0 auto 1.2rem;hyphens:none;word-break:keep-all;text-align:center;}
 .pull-giant-text em{color:#f0c8ff;font-style:normal;}
 .pull-giant-attr{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.4);}
 .article-body{max-width:780px;margin:0 auto;padding:0 2rem 4rem;}
@@ -43,7 +43,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .byline-text{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);}
 .byline-dot{width:4px;height:4px;border-radius:50%;background:var(--rouge);flex-shrink:0;}
 p{font-size:1.05rem;line-height:1.85;margin-bottom:1.4rem;text-align:justify;hyphens:auto;}
-p:first-of-type::first-letter{font-family:'Playfair Display',serif;font-size:4.2rem;font-weight:900;float:left;line-height:0.8;margin:0.12em 0.1em 0 0;color:var(--mauve);}
+p:first-of-type::first-letter{font-family:'Playfair Display',serif;font-size:4.2rem;font-weight:900;float:left;line-height:0.8;margin:0.12em 0.1em 0 0;color:var(--rouge);}
 .final{text-align:center;margin:3rem 0 2rem;}
 .final p{font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;font-weight:700;line-height:1.8;text-align:center;}
 .final p::first-letter{float:none;font-size:inherit;color:inherit;margin:0;}
@@ -117,17 +117,35 @@ footer .back{font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing
 
   <p>Le cloître, ensuite. On passe sous les arcades et on s'arrête net. Les colonnes torsadées de cordages, les motifs marins gravés dans chaque chapiteau, la lumière dorée qui traverse les galeries en double étage. C'est un des plus beaux espaces architecturaux d'Europe. On peut y rester longtemps. On devrait. Avant de remonter, il faut s'arrêter à la Pastelaria de Belém — fondée en 1837, inventrice des pastéis de nata originaux. La recette est toujours secrète. La queue en vaut la peine.</p>
 
+
+  <div class="encart">
+    <div class="encart-label">✦ À ne pas manquer · Belém</div>
+    <p><strong>Pastelaria de Belém</strong> — Fondée en 1837, elle est l'inventrice des <em>pastéis de nata</em> originaux. La recette est toujours secrète. La queue en vaut la peine. Pour rentrer en centre-ville, le tramway 15E longe le Tage — plus lent qu'un Uber, infiniment plus beau.</p>
+  </div>
+
   <p>On remonte vers le mirador de Santa Luzia — ce balcon suspendu au flanc de l'Alfama entre la ville et le fleuve. Une fresque d'azulejos sur le mur raconte la Lisbonne d'avant le tremblement de terre de 1755. On s'arrête devant elle comme devant une photographie ancienne. Le Tage en contrebas, les toits rouges, les antennes qui se mêlent aux cheminées. Rien n'a vraiment changé. Tout a changé.</p>
 
   <p>Mais on regarde mieux, ensuite. Les façades d'azulejos de l'Alfama — il en manque, maintenant. Des cases vides dans les carreaux bleus et blancs, comme des dents absentes dans un sourire. Ces lacunes ont quelque chose d'honnête — elles disent le temps qui passe sans chercher à le camoufler. Les façades aussi ont vieilli. Cette peinture jaune pâle légèrement écaillée — on ne sait plus si c'est de la négligence ou du style. Probablement les deux. Lisbonne a toujours été une ville qui confond le délabrement et le charme, et qui s'en sort à chaque fois.</p>
 
   <p>Le tram 28 remonte vers l'Alfama en empruntant des ruelles si étroites que les rétroviseurs frôlent les façades. Il tourne devant la Sé — la cathédrale romane du XIIe siècle, la plus ancienne de Lisbonne — et continue de monter vers le château São Jorge, la forteresse médiévale construite par les Maures qui domine la ville. Les vues depuis les tours sont parmi les plus belles de Lisbonne — sur le Tage, sur la Praça do Comércio, sur les deux ponts qui enjambent le fleuve.</p>
 
+
+  <div class="encart">
+    <div class="encart-label">✦ À ne pas manquer · Alfama</div>
+    <p><strong>Château São Jorge</strong> — Les vues depuis les tours sont parmi les plus belles de Lisbonne. Sur le Tage, sur la Praça do Comércio, sur le pont du 25 Avril et, par temps clair, sur le pont Vasco da Gama au loin. Prévoir au moins une heure.</p>
+  </div>
+
   <p>Le soir, on descend dans les casas de fado. Ces salles intimes où le silence est sacré, où l'on sirote un verre de porto en écoutant une voix qui dit l'absence. C'est ici que le fado existe vraiment, loin des scènes touristiques. Un soir à Lisbonne sans fado dans l'Alfama, c'est un soir à moitié vécu.</p>
 
   <p>Le lendemain matin, on commence au Rossio. La grande place aux pavés en vagues de pierre noire et blanche, les cafés centenaires, les pigeons, le bruit sourd de la ville qui tourne autour. Au centre, les deux fontaines baroques crachent leur eau sans se soucier du monde — elles sont là depuis 1847, elles seront là après nous.</p>
 
   <p>À deux pas, l'Elevador de Santa Justa surgit au milieu des ruelles comme un objet venu d'ailleurs — dentelle de métal rivetée de 45 mètres, cabines en bois d'origine. Elle relie la Baixa au Largo do Carmo. Depuis la plateforme sommitale, la vue embrasse les toits de la ville basse, le château São Jorge sur sa colline d'en face, et au loin, le Tage.</p>
+
+
+  <div class="encart">
+    <div class="encart-label">✦ À ne pas manquer · Jéronimos</div>
+    <p><strong>Monastère des Jéronimos</strong> — L'entrée de l'église est gratuite. Le cloître est payant — et indispensable. Arriver après 15h en semaine pour éviter les groupes. Prévoir deux heures minimum.</p>
+  </div>
 
   <p>On prend ensuite la ligne rouge du métro jusqu'au Palais du Marquis de Fronteira — un des joyaux méconnus de Lisbonne, un palais baroque du XVIIe siècle dont les jardins sont tapissés d'azulejos du sol au faîte des murs. Les bassins, les allées, les frises de carreaux bleus et blancs. Un endroit hors du temps, presque secret. Exactement comme Lisbonne aime être.</p>
 

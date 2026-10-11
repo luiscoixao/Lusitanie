@@ -1,0 +1,19 @@
+name: fetch-media
+on:
+  push:
+    branches: [media-tmp]
+    paths: [urls.txt]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          mkdir -p media
+          while read -r name url; do [ -n "$name" ] && curl -sSfL -o "media/$name" "$url"; done < urls.txt
+          ls -la media
+          git config user.name "lusitanie-bot"; git config user.email "bot@users.noreply.github.com"
+          git rm -q --cached urls.txt; rm urls.txt
+          git add media; git commit -qm "media"; git push -q

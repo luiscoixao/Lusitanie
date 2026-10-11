@@ -1,6 +1,8 @@
+import wave, numpy as np
 from faster_whisper import WhisperModel
+w=wave.open("seg.wav"); a=np.frombuffer(w.readframes(w.getnframes()),np.int16).astype(np.float32)/32768
 m=WhisperModel("small",compute_type="int8")
-segs,_=m.transcribe("seg.wav",language="fr",word_timestamps=True)
+segs,_=m.transcribe(a,language="fr",word_timestamps=True)
 with open("words.txt","w") as f:
     for s in segs:
-        for w in s.words: f.write(f"{w.start:.2f}\t{w.end:.2f}\t{w.word}\n")
+        for x in s.words: f.write(f"{x.start:.2f}\t{x.end:.2f}\t{x.word}\n")

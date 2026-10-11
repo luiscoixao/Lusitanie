@@ -11,15 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          pip install -q faster-whisper
-          python - <<'PY'
-          from faster_whisper import WhisperModel
-          m=WhisperModel("small",compute_type="int8")
-          segs,_=m.transcribe("seg.wav",language="fr",word_timestamps=True)
-          with open("words.txt","w") as f:
-              for s in segs:
-                  for w in s.words: f.write(f"{w.start:.2f}\t{w.end:.2f}\t{w.word}\n")
-          PY
+          (pip install -q faster-whisper && python tr.py) > log.txt 2>&1 || true
           git config user.name bot; git config user.email bot@users.noreply.github.com
-          git rm -q --cached seg.wav; rm seg.wav
-          git add words.txt; git commit -qm words; git push -q
+          git rm -q --cached seg.wav || true; rm -f seg.wav
+          git add -A; git commit -qm words; git push -q

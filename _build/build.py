@@ -12,10 +12,10 @@ SITE = "https://lusitanie.blog"
 
 RUBRIQUES = [  # (slug, libellé)
     ("culture", "Culture"), ("histoire", "Histoire"), ("musique", "Musique"),
-    ("voyage", "Voyage"), ("diaspora", "Diaspora"), ("football", "Football"),
+    ("voyage", "Voyage"), ("diaspora", "Diaspora"),
 ]
 SECTION_DE = {  # rubrique affichée -> section de navigation
-    "culture": "culture", "cinéma": "culture", "philosophie": "culture", "littérature": "culture",
+    "culture": "culture", "cinéma": "culture", "langue": "culture", "architecture": "culture", "bande dessinée": "culture", "philosophie": "culture", "littérature": "culture",
     "histoire": "histoire", "patrimoine": "histoire",
     "musique": "musique", "fado": "musique",
     "voyage": "voyage", "carnet de voyage": "voyage",
@@ -65,6 +65,8 @@ def lecture(corps):
 
 
 def page(titre, description, contenu, *, canonical, image=None, courant=None, type_og="website"):
+    if image and not image.startswith("http"):
+        image = f"{SITE}/{image}"
     og_img = f'\n<meta property="og:image" content="{esc(image)}">' if image else ""
     nav = "".join(
         f'<li><a href="rubrique-{s}.html"{" aria-current=\"page\"" if s == courant else ""}>{l}</a></li>'
@@ -138,8 +140,9 @@ def vignette(img, w):
 
 
 def carte(a):
+    entiere = " entiere" if a.get("image_entiere") else ""
     return f"""<a class="carte" href="{a['slug']}.html">
-  <div class="carte-image"><img src="{esc(vignette(a['image'], 720))}" alt="{esc(a.get('image_alt') or a['title'])}" loading="lazy"></div>
+  <div class="carte-image{entiere}"><img src="{esc(vignette(a['image'], 720))}" alt="{esc(a.get('image_alt') or a['title'])}" loading="lazy"></div>
   <span class="surtitre">{esc(a['rubrique'])}</span>
   <h3>{esc(a['title'])}</h3>
   <p>{esc(a['excerpt'])}</p>
@@ -148,7 +151,7 @@ def carte(a):
 
 
 def ligne(a):
-    return f"""<a href="{a['slug']}.html"><img src="{esc(vignette(a['image'], 300))}" alt="" loading="lazy"><div><span class="surtitre">{esc(a['rubrique'])}</span><h3>{esc(a['title'])}</h3></div></a>"""
+    return f"""<a href="{a['slug']}.html"><img class="{'entiere' if a.get('image_entiere') else ''}" src="{esc(vignette(a['image'], 300))}" alt="" loading="lazy"><div><span class="surtitre">{esc(a['rubrique'])}</span><h3>{esc(a['title'])}</h3></div></a>"""
 
 
 def titre_h1(a):
@@ -203,7 +206,7 @@ def accueil(arts):
     reste = [a for a in arts if a is not une]
     contenu = f"""<div class="wrap">
 <a class="une" href="{une['slug']}.html">
-  <div class="une-image"><img src="{esc(vignette(une['image'], 1200))}" alt="{esc(une.get('image_alt') or une['title'])}"></div>
+  <div class="une-image{' entiere' if une.get('image_entiere') else ''}"><img src="{esc(vignette(une['image'], 1200))}" alt="{esc(une.get('image_alt') or une['title'])}"></div>
   <div>
     <span class="surtitre">{esc(une['rubrique'])}</span>
     <h2>{esc(une['title'])}</h2>

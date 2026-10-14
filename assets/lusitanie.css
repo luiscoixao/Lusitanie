@@ -284,3 +284,7 @@ a { color: inherit; }
 .social-links { display: flex; gap: 12px; flex-wrap: wrap; }
 .social-links a { font-family: var(--sans); font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--encre); border: 1px solid var(--encre); padding: 9px 16px; }
 .social-links a:hover { background: var(--encre); color: #fff; }
+
+/* Visuels avec titre et affiches : affichés en entier, sans rognage */
+.carte-image.entiere img, .une-image.entiere img, .liste-compacte img.entiere { object-fit: contain; background: var(--fond-doux); }
+.article-visuel img { width: auto; max-width: 100%; max-height: 720px; margin: 0 auto; object-fit: contain; }

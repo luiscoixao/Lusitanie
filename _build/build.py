@@ -1,0 +1,277 @@
+"""Génère le site lusitanie.blog à partir de _articles/ et _pages/.
+
+Usage : python3 _build/build.py
+Chaque article est un fichier _articles/<slug>.html : un bloc <!--META {json} META-->
+suivi du corps HTML. Le script réécrit les pages .html à la racine, l'accueil,
+les pages rubriques et le sitemap.
+"""
+import os, re, json, html, datetime, math
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE = "https://lusitanie.blog"
+
+RUBRIQUES = [  # (slug, libellé)
+    ("culture", "Culture"), ("histoire", "Histoire"), ("musique", "Musique"),
+    ("voyage", "Voyage"), ("diaspora", "Diaspora"), ("football", "Football"),
+]
+SECTION_DE = {  # rubrique affichée -> section de navigation
+    "culture": "culture", "cinéma": "culture", "philosophie": "culture", "littérature": "culture",
+    "histoire": "histoire", "patrimoine": "histoire",
+    "musique": "musique", "fado": "musique",
+    "voyage": "voyage", "carnet de voyage": "voyage",
+    "diaspora": "diaspora", "société": "diaspora",
+    "football": "football", "sport": "football",
+}
+MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août",
+        "septembre", "octobre", "novembre", "décembre"]
+
+HEAD_TRACKING = """<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0E4SEHN0TT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-0E4SEHN0TT");
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":
+new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
+"https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,"script","dataLayer","GTM-KBSPNMDP");</script>"""
+BODY_TRACKING = """<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBSPNMDP" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>"""
+
+LIENS = [("Facebook", "https://facebook.com/lusitanie"),
+         ("Instagram", "https://instagram.com/lusitanie.insta"),
+         ("Boutique", "https://payhip.com/Lusitanie")]
+
+
+def esc(s):
+    return html.escape(s or "", quote=True)
+
+
+def date_fr(iso):
+    d = datetime.date.fromisoformat(iso)
+    return f"{d.day}{'er' if d.day == 1 else ''} {MOIS[d.month - 1]} {d.year}"
+
+
+def section(a):
+    return SECTION_DE.get(a["rubrique"].lower(), a.get("cat") or "culture")
+
+
+def lecture(corps):
+    mots = len(re.sub(r"<[^>]+>", " ", corps).split())
+    return max(1, math.ceil(mots / 230))
+
+
+def page(titre, description, contenu, *, canonical, image=None, courant=None, type_og="website"):
+    og_img = f'\n<meta property="og:image" content="{esc(image)}">' if image else ""
+    nav = "".join(
+        f'<li><a href="rubrique-{s}.html"{" aria-current=\"page\"" if s == courant else ""}>{l}</a></li>'
+        for s, l in RUBRIQUES)
+    liens = "".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LIENS)
+    aujourd_hui = date_fr(datetime.date.today().isoformat())
+    return f"""<!DOCTYPE html>
+<html lang="fr">
+<head>
+{HEAD_TRACKING}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{esc(titre)}</title>
+<meta name="description" content="{esc(description)}">
+<link rel="canonical" href="{canonical}">
+<meta property="og:title" content="{esc(titre)}">
+<meta property="og:description" content="{esc(description)}">
+<meta property="og:type" content="{type_og}">
+<meta property="og:site_name" content="Lusitanie">
+<meta property="og:url" content="{canonical}">{og_img}
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/lusitanie.css">
+</head>
+<body>
+{BODY_TRACKING}
+<div class="barre"><div class="wrap"><span class="date">{aujourd_hui}</span><nav>{liens}</nav></div></div>
+<header class="entete">
+  <a class="logo" href="index.html">LUSITANIE</a>
+  <p class="devise">Culture portugaise et lusophone</p>
+  <nav class="rubriques" aria-label="Rubriques"><ul>{nav}</ul></nav>
+</header>
+<main>
+{contenu}
+</main>
+<footer class="pied"><div class="wrap">
+  <div><a class="logo" href="index.html">LUSITANIE</a><p>Culture portugaise et lusophone, en français.</p></div>
+  <nav>{liens}<a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></nav>
+</div></footer>
+</body>
+</html>
+"""
+
+
+def charger():
+    arts = []
+    d = os.path.join(ROOT, "_articles")
+    for fn in sorted(os.listdir(d)):
+        if not fn.endswith(".html"):
+            continue
+        raw = open(os.path.join(d, fn), encoding="utf-8").read()
+        m = re.match(r"<!--META\n(.*?)\nMETA-->\n(.*)", raw, re.S)
+        meta = json.loads(m.group(1))
+        meta["corps"] = m.group(2)
+        if meta.get("brouillon"):
+            continue
+        meta["section"] = section(meta)
+        meta["minutes"] = lecture(meta["corps"])
+        arts.append(meta)
+    arts.sort(key=lambda a: a["date"], reverse=True)
+    return arts
+
+
+def vignette(img, w):
+    """Image Cloudinary redimensionnée pour les cartes."""
+    if "res.cloudinary.com" in img and "/upload/" in img:
+        return img.replace("/upload/q_auto/f_auto/", "/upload/").replace("/upload/", f"/upload/c_fill,w_{w},ar_3:2,q_auto,f_auto/", 1)
+    return img
+
+
+def carte(a):
+    return f"""<a class="carte" href="{a['slug']}.html">
+  <div class="carte-image"><img src="{esc(vignette(a['image'], 720))}" alt="{esc(a.get('image_alt') or a['title'])}" loading="lazy"></div>
+  <span class="surtitre">{esc(a['rubrique'])}</span>
+  <h3>{esc(a['title'])}</h3>
+  <p>{esc(a['excerpt'])}</p>
+  <div class="meta"><span>{date_fr(a['date'])}</span><span>{a['minutes']} min</span></div>
+</a>"""
+
+
+def ligne(a):
+    return f"""<a href="{a['slug']}.html"><img src="{esc(vignette(a['image'], 300))}" alt="" loading="lazy"><div><span class="surtitre">{esc(a['rubrique'])}</span><h3>{esc(a['title'])}</h3></div></a>"""
+
+
+def titre_h1(a):
+    th = a.get("title_html")
+    if th and re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", th)).strip() == a["title"]:
+        return th
+    return esc(a["title"])
+
+
+def article(a, tous):
+    ep = a.get("epigraph")
+    exergue = ""
+    if ep and ep.get("text"):
+        cite = f"<cite>{esc(ep['attr'])}</cite>" if ep.get("attr") else ""
+        exergue = f'<blockquote class="exergue"><p>{ep["text"]}</p>{cite}</blockquote>'
+    legende = f"<figcaption>{esc(a['legende'])}</figcaption>" if a.get("legende") else ""
+    visuel = f'<figure class="article-visuel"><img src="{esc(a["image"])}" alt="{esc(a.get("image_alt") or a["title"])}">{legende}</figure>' if a.get("image") else ""
+    encarts = ""
+    for x in a.get("asides", []):
+        externe = ' target="_blank" rel="noopener"' if x["href"].startswith("http") else ""
+        encarts += f"""<aside class="encart-produit"><div><div><span class="surtitre">{esc(x['label'])}</span><h3>{esc(x['title'])}</h3><p>{x['desc']}</p></div><a class="bouton" href="{esc(x['href'])}"{externe}>{esc(x['button'] or 'Découvrir')}</a></div></aside>"""
+    source = ""
+    if a.get("facebook_url"):
+        source = f'<p class="signature">Article paru d\'abord sur <a href="{esc(a["facebook_url"])}" target="_blank" rel="noopener">la page Facebook Lusitanie</a>.</p>'
+    voisins = [b for b in tous if b["slug"] != a["slug"] and b["section"] == a["section"]]
+    voisins += [b for b in tous if b["slug"] != a["slug"] and b not in voisins]
+    suite = "".join(carte(b) for b in voisins[:3])
+    contenu = f"""<article>
+<header class="article-entete">
+  <a class="surtitre" href="rubrique-{a['section']}.html">{esc(a['rubrique'])}</a>
+  <h1>{titre_h1(a)}</h1>
+  <p class="chapo">{a['deck']}</p>
+  <div class="meta"><span>La rédaction</span><span><time datetime="{a['date']}">{date_fr(a['date'])}</time></span><span>{a['minutes']} min de lecture</span></div>
+</header>
+{visuel}
+{exergue}
+<div class="corps">
+{a['corps']}
+</div>
+{source}
+{encarts}
+</article>
+<div class="wrap"><h2 class="titre-section">À lire aussi</h2><div class="grille">{suite}</div></div>"""
+    titre = f"{a['title']} — Lusitanie"
+    return page(titre, a.get("description") or a["excerpt"], contenu,
+                canonical=f"{SITE}/{a['slug']}.html", image=a.get("image"),
+                courant=a["section"], type_og="article")
+
+
+def accueil(arts):
+    une = next((a for a in arts if a.get("featured")), arts[0])
+    reste = [a for a in arts if a is not une]
+    contenu = f"""<div class="wrap">
+<a class="une" href="{une['slug']}.html">
+  <div class="une-image"><img src="{esc(vignette(une['image'], 1200))}" alt="{esc(une.get('image_alt') or une['title'])}"></div>
+  <div>
+    <span class="surtitre">{esc(une['rubrique'])}</span>
+    <h2>{esc(une['title'])}</h2>
+    <p>{esc(une['excerpt'])}</p>
+    <div class="meta"><span>{date_fr(une['date'])}</span><span>{une['minutes']} min de lecture</span></div>
+  </div>
+</a>
+<h2 class="titre-section">Derniers articles</h2>
+<div class="grille">{''.join(carte(a) for a in reste[:9])}</div>
+"""
+    if len(reste) > 9:
+        contenu += f"""<h2 class="titre-section">Toutes nos lectures</h2>
+<div class="liste-compacte">{''.join(ligne(a) for a in reste[9:])}</div>
+"""
+    contenu += "</div>"
+    return page("Lusitanie — Culture portugaise et lusophone",
+                "Lusitanie : la culture portugaise et lusophone en français. Fado, littérature, histoire, voyage, diaspora, football.",
+                contenu, canonical=f"{SITE}/", image=une.get("image"))
+
+
+def rubrique(slug, libelle, arts):
+    liste = [a for a in arts if a["section"] == slug]
+    corps = "".join(carte(a) for a in liste) or "<p>Aucun article pour le moment.</p>"
+    contenu = f"""<div class="wrap">
+<header class="intro-rubrique"><h1>{libelle}</h1></header>
+<h2 class="titre-section">{len(liste)} article{'s' if len(liste) > 1 else ''}</h2>
+<div class="grille">{corps}</div>
+</div>"""
+    return page(f"{libelle} — Lusitanie", f"Tous les articles {libelle.lower()} de Lusitanie.", contenu,
+                canonical=f"{SITE}/rubrique-{slug}.html", courant=slug)
+
+
+def pages_simples():
+    d = os.path.join(ROOT, "_pages")
+    for fn in sorted(os.listdir(d)):
+        raw = open(os.path.join(d, fn), encoding="utf-8").read()
+        m = re.match(r"<!--TITLE (.*?) -->\n(.*)", raw, re.S)
+        titre, corps = m.group(1), m.group(2)
+        yield fn, page(titre, titre, f'<div class="page">{corps}</div>', canonical=f"{SITE}/{fn}")
+
+
+def sitemap(arts):
+    urls = [(f"{SITE}/", datetime.date.today().isoformat(), "1.0")]
+    urls += [(f"{SITE}/rubrique-{s}.html", datetime.date.today().isoformat(), "0.6") for s, _ in RUBRIQUES]
+    urls += [(f"{SITE}/{a['slug']}.html", a.get("maj") or a["date"], "0.9") for a in arts]
+    lignes = "".join(f"  <url><loc>{u}</loc><lastmod>{d}</lastmod><priority>{p}</priority></url>\n" for u, d, p in urls)
+    return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{lignes}</urlset>\n'
+
+
+def ecrire(nom, contenu):
+    with open(os.path.join(ROOT, nom), "w", encoding="utf-8") as f:
+        f.write(contenu)
+
+
+def main():
+    arts = charger()
+    for a in arts:
+        ecrire(f"{a['slug']}.html", article(a, arts))
+    ecrire("index.html", accueil(arts))
+    for s, l in RUBRIQUES:
+        ecrire(f"rubrique-{s}.html", rubrique(s, l, arts))
+    for fn, contenu in pages_simples():
+        ecrire(fn, contenu)
+    ecrire("sitemap.xml", sitemap(arts))
+    print(f"{len(arts)} articles générés.")
+    for s, l in RUBRIQUES:
+        print(f"  {l}: {sum(1 for a in arts if a['section'] == s)}")
+
+
+if __name__ == "__main__":
+    main()

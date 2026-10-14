@@ -174,8 +174,6 @@ def article(a, tous):
         externe = ' target="_blank" rel="noopener"' if x["href"].startswith("http") else ""
         encarts += f"""<aside class="encart-produit"><div><div><span class="surtitre">{esc(x['label'])}</span><h3>{esc(x['title'])}</h3><p>{x['desc']}</p></div><a class="bouton" href="{esc(x['href'])}"{externe}>{esc(x['button'] or 'Découvrir')}</a></div></aside>"""
     source = ""
-    if a.get("facebook_url"):
-        source = f'<p class="signature">Article paru d\'abord sur <a href="{esc(a["facebook_url"])}" target="_blank" rel="noopener">la page Facebook Lusitanie</a>.</p>'
     voisins = [b for b in tous if b["slug"] != a["slug"] and b["section"] == a["section"]]
     voisins += [b for b in tous if b["slug"] != a["slug"] and b not in voisins]
     suite = "".join(carte(b) for b in voisins[:3])

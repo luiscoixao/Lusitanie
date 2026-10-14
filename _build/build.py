@@ -64,6 +64,9 @@ def lecture(corps):
     return max(1, math.ceil(mots / 230))
 
 
+CSS_VERSION = __import__("hashlib").md5(open(os.path.join(ROOT, "assets", "lusitanie.css"), "rb").read()).hexdigest()[:8]
+
+
 def page(titre, description, contenu, *, canonical, image=None, courant=None, type_og="website"):
     if image and not image.startswith("http"):
         image = f"{SITE}/{image}"
@@ -91,7 +94,7 @@ def page(titre, description, contenu, *, canonical, image=None, courant=None, ty
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/lusitanie.css">
+<link rel="stylesheet" href="assets/lusitanie.css?v={CSS_VERSION}">
 </head>
 <body>
 {BODY_TRACKING}

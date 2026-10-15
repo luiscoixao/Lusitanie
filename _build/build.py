@@ -15,7 +15,7 @@ RUBRIQUES = [  # (slug, libellé)
     ("voyage", "Voyage"), ("diaspora", "Diaspora"),
 ]
 SECTION_DE = {  # rubrique affichée -> section de navigation
-    "culture": "culture", "cinéma": "culture", "langue": "culture", "architecture": "culture", "bande dessinée": "culture", "philosophie": "culture", "littérature": "culture",
+    "culture": "culture", "cinéma": "culture", "langue": "culture", "langue portugaise": "culture", "architecture": "culture", "bande dessinée": "culture", "philosophie": "culture", "littérature": "culture",
     "histoire": "histoire", "patrimoine": "histoire",
     "musique": "musique", "fado": "musique",
     "voyage": "voyage", "carnet de voyage": "voyage",

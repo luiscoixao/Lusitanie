@@ -1,0 +1,4 @@
+beatriz.wav fr:  Beatrice, elle avait 10 ans.
+beatriz.wav pt:  Beatrice, ela tinha 10 anos.
+olinda.wav fr:  Hollinda, rentré au village après 40 ans à maintenant la nostalgie de la France.
+olinda.wav pt:  Olinda, entrée au village après 40 ans, à maintenant la nostalgie de la France.

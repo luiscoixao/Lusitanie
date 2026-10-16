@@ -1,0 +1,19 @@
+name: audio
+on:
+  push:
+    branches: [media-tmp]
+    paths: [urls.txt]
+permissions:
+  contents: write
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          mkdir -p media
+          while read -r name url; do [ -n "$name" ] && curl -sSfL -o "media/$name" "$url"; done < urls.txt
+          (pip install -q faster-whisper && python tr3.py) > log.txt 2>&1 || true
+          git config user.name bot; git config user.email bot@users.noreply.github.com
+          git rm -q --cached urls.txt; rm urls.txt
+          git add -A; git commit -qm audio; git push -q

@@ -1,8 +1,8 @@
-name: audio
+name: dl
 on:
   push:
     branches: [media-tmp]
-    paths: [full.wav]
+    paths: [urls.txt]
 permissions:
   contents: write
 jobs:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          (pip install -q faster-whisper && python tr5.py) > log.txt 2>&1 || true
+          mkdir -p media; i=0
+          while read -r u; do i=$((i+1)); curl -sSL "$u" -o media/f$i.png; done < urls.txt
           git config user.name bot; git config user.email bot@users.noreply.github.com
-          git rm -q --cached full.wav; rm full.wav
-          git add -A; git commit -qm t; git push -q
+          git add media; git commit -qm m; git push -q

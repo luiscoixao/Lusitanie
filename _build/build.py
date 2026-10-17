@@ -64,6 +64,45 @@ def lecture(corps):
     return max(1, math.ceil(mots / 230))
 
 
+# Boutique Payhip affichée en bas de chaque page : (id produit, titre, type, prix, couverture)
+BOUTIQUE = [
+    ("tFoJq", "L'épopée maritime portugaise", "Livre audio", "3,99", "tFoJq"),
+    ("lDFO7", "Les Bidonvilles portugais", "Livre audio", "3,99", "lDFO7"),
+    ("b4rSg", "L'Immigration portugaise en France", "Récit audio", "1,99", "b4rSg"),
+    ("YPtSq", "As Mães Corajosas da Imigração Portuguesa", "Récit audio", "2,00", "YPtSq"),
+    ("VQ5P1", "Les mères courage de l'immigration portugaise", "Livre audio", "2,00", "VQ5P1"),
+    ("pkMNA", "L'Écusson de l'équipe du Portugal", "Récit audio", "2,00", "pkMNA"),
+    ("HVo5F", "Les Pères de l'immigration portugaise", "Récit audio", "2,00", "HVo5F"),
+    ("B38YI", "La Saudade", "Chanson", "1,00", "B38YI"),
+    ("JHYld", "Le Fado", "Chanson", "1,00", "JHYld"),
+    ("LQEXG", "Nos parents, ces héros", "Chanson", "1,00", "LQEXG"),
+    ("w6Ouy", "Fado", "Chanson", "1,00", "w6Ouy"),
+    ("70RZb", "L'immigration portugaise : mémoire d'exils, transmission d'un héritage et saudade", "Récit audio", "2,00", "70RZb"),
+    ("EDZFs", "La Gare", "Récit audio", "2,00", "EDZFs"),
+    ("pmnuA", "Portugal — Là où finit la terre, là où commence l'horizon", "Livre audio", "10,00", "pmnuA"),
+    ("pR94y", "Saudade", "Récit audio", "2,00", "pR94y"),
+    ("3Vsu9", "De Lisbonne à Paris", "Chanson", "1,00", "3Vsu9"),
+    ("iZdLM", "25 Avril", "Chanson", "1,00", "iZdLM"),
+    ("6YWyV", "Portugal — Là où finit la terre, là où commence l'horizon", "Ebook", "7,00", "6YWyV"),
+    ("s6gvM", "Portugal — Là où finit la terre, là où commence l'horizon", "Récit audio", "2,00", "pmnuA"),
+]
+
+
+def boutique():
+    cartes = "".join(
+        f'<li><a href="https://payhip.com/b/{i}" target="_blank" rel="noopener">'
+        f'<img src="images/boutique/{c}.jpg" alt="" loading="lazy" width="500" height="833">'
+        f'<span class="b-type">{esc(t)}</span><span class="b-titre">{esc(n)}</span>'
+        f'<span class="b-prix">{p} €</span></a></li>'
+        for i, n, t, p, c in BOUTIQUE)
+    return f"""<section class="boutique" aria-labelledby="boutique-titre"><div class="wrap">
+  <div class="boutique-tete"><h2 class="titre-section" id="boutique-titre">La boutique Lusitanie</h2>
+  <a class="boutique-tout" href="https://payhip.com/Lusitanie" target="_blank" rel="noopener">Tout le catalogue →</a></div>
+  <p class="boutique-intro">Livres audio, récits et chansons, à télécharger.</p>
+  <ul class="boutique-bande">{cartes}</ul>
+</div></section>"""
+
+
 CSS_VERSION = __import__("hashlib").md5(open(os.path.join(ROOT, "assets", "lusitanie.css"), "rb").read()).hexdigest()[:8]
 
 
@@ -107,6 +146,7 @@ def page(titre, description, contenu, *, canonical, image=None, courant=None, ty
 <main>
 {contenu}
 </main>
+{boutique()}
 <footer class="pied"><div class="wrap">
   <div><a class="logo" href="index.html">LUSITANIE</a><p>Culture portugaise et lusophone.</p></div>
   <nav>{liens}<a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></nav>

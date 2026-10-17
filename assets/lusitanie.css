@@ -292,3 +292,29 @@ a { color: inherit; }
 /* Le titre LUSITANIE passe au rouge au survol, comme les liens du pied de page */
 .logo { transition: color .2s ease; }
 .logo:hover, .logo:focus-visible { color: var(--rouge); }
+
+/* ── Boutique (bas de page) ──────────────────────────── */
+.boutique { margin-top: 72px; }
+.boutique + .pied { margin-top: 48px; }
+.boutique-tete { display: flex; align-items: center; gap: 18px; margin: 0 0 6px; }
+.boutique-tete .titre-section { flex: 1; margin: 0; }
+.boutique-tout { font-family: var(--sans); font-size: 0.8rem; font-weight: 500; color: var(--encre); text-decoration: none; white-space: nowrap; }
+.boutique-tout:hover { color: var(--rouge); }
+.boutique-intro { font-family: var(--serif); font-style: italic; color: var(--gris); margin: 0 0 20px; }
+.boutique-bande {
+  list-style: none; margin: 0; padding: 0 0 14px;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 150px; gap: 20px;
+  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin;
+}
+.boutique-bande li { scroll-snap-align: start; }
+.boutique-bande a { display: flex; flex-direction: column; text-decoration: none; color: var(--encre); }
+.boutique-bande img { width: 100%; height: auto; aspect-ratio: 3 / 5; object-fit: cover; background: var(--filet); display: block; }
+.boutique-bande .b-type { font-family: var(--sans); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rouge); margin-top: 10px; }
+.boutique-bande .b-titre { font-family: var(--serif); font-size: 0.95rem; line-height: 1.25; margin-top: 4px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.boutique-bande .b-prix { font-family: var(--sans); font-size: 0.8rem; color: var(--gris); margin-top: 6px; }
+.boutique-bande a:hover .b-titre { color: var(--rouge); }
+@media (max-width: 620px) {
+  .boutique-bande { grid-auto-columns: 132px; gap: 16px; }
+  .boutique-tete { flex-wrap: wrap; }
+}

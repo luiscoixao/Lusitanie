@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Télécharger
         run: |
-          mkdir -p images
+          mkdir -p images/boutique
           while read -r nom url; do
             [ -z "$nom" ] && continue
             curl -sSL --fail -A "Mozilla/5.0" -o "images/$nom" "$url" && echo "ok $nom" || echo "ECHEC $nom"

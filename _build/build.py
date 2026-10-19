@@ -106,7 +106,43 @@ def boutique():
 CSS_VERSION = __import__("hashlib").md5(open(os.path.join(ROOT, "assets", "lusitanie.css"), "rb").read()).hexdigest()[:8]
 
 
-def page(titre, description, contenu, *, canonical, image=None, courant=None, type_og="website"):
+def ld_json(donnees):
+    """Bloc de données structurées schema.org (JSON-LD)."""
+    if not donnees:
+        return ""
+    txt = json.dumps(donnees, ensure_ascii=False, indent=1).replace("</", "<\\/")
+    return f'\n<script type="application/ld+json">\n{txt}\n</script>'
+
+
+EDITEUR = {"@type": "Organization", "name": "Lusitanie", "url": f"{SITE}/",
+           "sameAs": ["https://www.facebook.com/lusitanie", "https://www.instagram.com/lusitanie.insta"]}
+
+
+def ld_article(a, url):
+    img = a.get("image") or ""
+    if img and not img.startswith("http"):
+        img = f"{SITE}/{img}"
+    sec = section(a)
+    libelle = dict(RUBRIQUES).get(sec, a["rubrique"])
+    article = {
+        "@context": "https://schema.org", "@type": "Article",
+        "headline": a["title"][:110],
+        "description": a.get("description") or a["excerpt"],
+        "datePublished": a["date"], "dateModified": a.get("maj") or a["date"],
+        "inLanguage": "fr", "articleSection": a["rubrique"],
+        "mainEntityOfPage": url, "url": url,
+        "author": EDITEUR, "publisher": EDITEUR,
+    }
+    if img:
+        article["image"] = [img]
+    fil = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": f"{SITE}/"},
+        {"@type": "ListItem", "position": 2, "name": libelle, "item": f"{SITE}/rubrique-{sec}.html"},
+        {"@type": "ListItem", "position": 3, "name": a["title"], "item": url}]}
+    return [article, fil]
+
+
+def page(titre, description, contenu, *, canonical, image=None, courant=None, type_og="website", donnees=None):
     if image and not image.startswith("http"):
         image = f"{SITE}/{image}"
     og_img = f'\n<meta property="og:image" content="{esc(image)}">' if image else ""
@@ -133,7 +169,7 @@ def page(titre, description, contenu, *, canonical, image=None, courant=None, ty
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/lusitanie.css?v={CSS_VERSION}">
+<link rel="stylesheet" href="assets/lusitanie.css?v={CSS_VERSION}">{ld_json(donnees)}
 </head>
 <body>
 {BODY_TRACKING}
@@ -239,7 +275,8 @@ def article(a, tous):
     titre = f"{a['title']} — Lusitanie"
     return page(titre, a.get("description") or a["excerpt"], contenu,
                 canonical=f"{SITE}/{a['slug']}.html", image=a.get("image"),
-                courant=a["section"], type_og="article")
+                courant=a["section"], type_og="article",
+                donnees=ld_article(a, f"{SITE}/{a['slug']}.html"))
 
 
 def accueil(arts):
@@ -265,7 +302,10 @@ def accueil(arts):
     contenu += "</div>"
     return page("Lusitanie — Culture portugaise et lusophone",
                 "Lusitanie : la culture portugaise et lusophone. Fado, littérature, histoire, voyage, diaspora, football.",
-                contenu, canonical=f"{SITE}/", image=une.get("image"))
+                contenu, canonical=f"{SITE}/", image=une.get("image"),
+                donnees=[{"@context": "https://schema.org", "@type": "WebSite", "name": "Lusitanie",
+                          "url": f"{SITE}/", "inLanguage": "fr"},
+                         dict(EDITEUR, **{"@context": "https://schema.org"})])
 
 
 def rubrique(slug, libelle, arts):

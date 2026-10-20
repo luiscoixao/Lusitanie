@@ -1,0 +1,22 @@
+name: tmp-audio
+on:
+  push:
+    branches: [tmp-audio]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp-audio
+      - name: Download music
+        run: |
+          curl -sSL -o musique.mp3 "https://storage.googleapis.com/xi-backend/database/workspace/391f11fc52914d9d90ef0f5ece76425d/content_generation/gEQfN3xQnbExiGyzfIVl/ao2B180vRDOEicNoVBh4/content.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20261020%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20261020T100629Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=891b16af7ce29f3ee9087c46113719f94ed46af7f5ac723c8e450bee82b69686e29385a49ea4c25bcda76cfbf2a419b6b8a373a1e26eb99c7c4d1e4e8c153088e88be33dd783be19d6a7681edf308e600006324d30f34dffd287aa7f08de7a3d83f2f284d27e5fa8e6ccb84bc3911b25579b83ae8e3a15d2441ab79893d1ef4af4ca485e8a1ba1973c87e93f64aec85b09e47ce1e6710be327811c14ca09eecbe86f1b85591f7e6b6d6f8ba982ac8283e335325763410c84a930b37651ad8d2bdd6322d409993bfc02720109776371b6761d2a9a507e78abb4a86c50132d3b441468ddd70bd40490c233ecca36e64e031b665618b9cdeb3e244eb7dc3650b3be"
+          ls -la musique.mp3
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add musique.mp3
+          git commit -m "musique temporaire"
+          git push origin tmp-audio

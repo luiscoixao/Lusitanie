@@ -66,6 +66,7 @@ def lecture(corps):
 
 # Boutique Payhip affichée en bas de chaque page : (id produit, titre, type, prix, couverture)
 BOUTIQUE = [
+    ("ubEdI", "Les oubliés de la Lys — Le Portugal dans la Grande Guerre", "Récit audio", "2,00", "ubEdI"),
     ("tFoJq", "L'épopée maritime portugaise", "Livre audio", "3,99", "tFoJq"),
     ("lDFO7", "Les Bidonvilles portugais", "Livre audio", "3,99", "lDFO7"),
     ("b4rSg", "L'Immigration portugaise en France", "Récit audio", "1,99", "b4rSg"),

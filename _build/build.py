@@ -38,7 +38,9 @@ HEAD_TRACKING = """<!-- Google Analytics GA4 -->
 new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
 "https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,"script","dataLayer","GTM-KBSPNMDP");</script>"""
+})(window,document,"script","dataLayer","GTM-KBSPNMDP");</script>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6217390274263347" crossorigin="anonymous"></script>"""
 BODY_TRACKING = """<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBSPNMDP" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>"""
 
 LIENS = [("Facebook", "https://facebook.com/lusitanie"),
@@ -186,7 +188,7 @@ def page(titre, description, contenu, *, canonical, image=None, courant=None, ty
 {boutique()}
 <footer class="pied"><div class="wrap">
   <div><a class="logo" href="index.html">LUSITANIE</a><p>Culture portugaise et lusophone.</p></div>
-  <nav>{liens}<a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></nav>
+  <nav>{liens}<a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></nav>
 </div></footer>
 </body>
 </html>

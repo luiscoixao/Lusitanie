@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lusitanie IA - Widget Flottant</title>
+    <style>
+        /* Conteneur du widget */
+        .lusitanie-widget-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Bouton flottant */
+        .lusitanie-chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1A3A5C 0%, #2B5EA7 100%);
+            border: 3px solid #C9A84C;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
+            transition: all 0.3s ease;
+            font-size: 28px;
+            font-weight: bold;
+            color: #C9A84C;
+            position: relative;
+        }
+
+        .lusitanie-chat-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(26, 58, 92, 0.4);
+        }
+
+        .lusitanie-chat-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Indicateur "nouveau message" */
+        .lusitanie-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 24px;
+            height: 24px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .lusitanie-badge.show {
+            display: flex;
+        }
+
+        /* Popup */
+        .lusitanie-popup {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 9998;
+        }
+
+        .lusitanie-popup.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* En-tête de la popup */
+        .lusitanie-popup-header {
+            background: linear-gradient(135deg, #1A3A5C 0%, #2B5EA7 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .lusitanie-popup-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lusitanie-popup-header-title-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1A3A5C;
+            font-size: 18px;
+        }
+
+        .lusitanie-popup-header-title-text h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .lusitanie-popup-header-title-text p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .lusitanie-close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s;
+        }
+
+        .lusitanie-close-button:hover {
+            opacity: 0.8;
+        }
+
+        /* Contenu de la popup */
+        .lusitanie-popup-content {
+            flex: 1;
+            overflow: hidden;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .lusitanie-popup-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .lusitanie-popup {
+                width: calc(100vw - 20px);
+                height: calc(100vh - 100px);
+                bottom: 70px;
+                right: 10px;
+            }
+
+            .lusitanie-chat-button {
+                width: 56px;
+                height: 56px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Widget Lusitanie IA -->
+<div class="lusitanie-widget-container">
+    <!-- Bouton flottant -->
+    <button class="lusitanie-chat-button" id="lusitanieChatButton" title="Discuter avec Lusitanie IA">
+        L
+        <div class="lusitanie-badge" id="lusitanieBadge">1</div>
+    </button>
+
+    <!-- Popup -->
+    <div class="lusitanie-popup" id="lusitaniePopup">
+        <!-- En-tête -->
+        <div class="lusitanie-popup-header">
+            <div class="lusitanie-popup-header-title">
+                <div class="lusitanie-popup-header-title-avatar">L</div>
+                <div class="lusitanie-popup-header-title-text">
+                    <h3>Lusitanie IA</h3>
+                    <p>Assistante IA Portugal</p>
+                </div>
+            </div>
+            <button class="lusitanie-close-button" id="lusitanieCloseButton">✕</button>
+        </div>
+
+        <!-- Contenu (iframe) -->
+        <div class="lusitanie-popup-content">
+            <iframe 
+                class="lusitanie-popup-iframe"
+                src="https://lusiaai-vxcarjwn.manus.space"
+                title="Lusitanie IA Chat"
+                allow="microphone; camera"
+            ></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Récupérer les éléments
+    const chatButton = document.getElementById('lusitanieChatButton');
+    const popup = document.getElementById('lusitaniePopup');
+    const closeButton = document.getElementById('lusitanieCloseButton');
+    const badge = document.getElementById('lusitanieBadge');
+
+    // Ouvrir la popup
+    chatButton.addEventListener('click', () => {
+        popup.classList.toggle('show');
+        badge.classList.remove('show');
+    });
+
+    // Fermer la popup
+    closeButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        popup.classList.remove('show');
+    });
+
+    // Fermer en cliquant en dehors
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.lusitanie-widget-container')) {
+            popup.classList.remove('show');
+        }
+    });
+
+    // Optionnel : afficher le badge après 5 secondes
+    setTimeout(() => {
+        if (!popup.classList.contains('show')) {
+            badge.classList.add('show');
+        }
+    }, 5000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+name: Importer les images
+on:
+  push:
+    paths: ['_build/images-a-importer.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  importer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Télécharger
+        run: |
+          mkdir -p images/boutique
+          while read -r nom url; do
+            [ -z "$nom" ] && continue
+            curl -sSL --fail -A "Mozilla/5.0" -o "images/$nom" "$url" && echo "ok $nom" || echo "ECHEC $nom"
+          done < _build/images-a-importer.txt
+          ls -la images
+      - name: Enregistrer
+        run: |
+          git config user.name "Lusitanie (import)"
+          git config user.email "luis.coixao@gmail.com"
+          git add images
+          git rm -q --cached _build/images-a-importer.txt || true
+          rm -f _build/images-a-importer.txt
+          git commit -m "Import des images des articles" || echo "rien"
+          git push

@@ -222,10 +222,16 @@ def vignette(img, w):
     return img
 
 
+def position(a):
+    """Cadrage des vignettes recadrées : "image_position" (ex. "50% 45%") dans les métadonnées."""
+    pos = a.get("image_position")
+    return f' style="object-position: {esc(pos)}"' if pos else ""
+
+
 def carte(a):
     entiere = " entiere" if a.get("image_entiere") else ""
     return f"""<a class="carte" href="{a['slug']}.html">
-  <div class="carte-image{entiere}"><img src="{esc(vignette(a['image'], 720))}" alt="{esc(a.get('image_alt') or a['title'])}" loading="lazy"></div>
+  <div class="carte-image{entiere}"><img src="{esc(vignette(a['image'], 720))}"{position(a)} alt="{esc(a.get('image_alt') or a['title'])}" loading="lazy"></div>
   <span class="surtitre">{esc(a['libelle'])}</span>
   <h3>{esc(a['title'])}</h3>
   <p>{esc(a['excerpt'])}</p>
@@ -234,7 +240,7 @@ def carte(a):
 
 
 def ligne(a):
-    return f"""<a href="{a['slug']}.html"><img class="{'entiere' if a.get('image_entiere') else ''}" src="{esc(vignette(a['image'], 300))}" alt="" loading="lazy"><div><span class="surtitre">{esc(a['libelle'])}</span><h3>{esc(a['title'])}</h3></div></a>"""
+    return f"""<a href="{a['slug']}.html"><img class="{'entiere' if a.get('image_entiere') else ''}" src="{esc(vignette(a['image'], 300))}"{position(a)} alt="" loading="lazy"><div><span class="surtitre">{esc(a['libelle'])}</span><h3>{esc(a['title'])}</h3></div></a>"""
 
 
 def titre_h1(a):
@@ -288,7 +294,7 @@ def accueil(arts):
     reste = [a for a in arts if a is not une]
     contenu = f"""<div class="wrap">
 <a class="une" href="{une['slug']}.html">
-  <div class="une-image{' entiere' if une.get('image_entiere') else ''}"><img src="{esc(vignette(une['image'], 1200))}" alt="{esc(une.get('image_alt') or une['title'])}"></div>
+  <div class="une-image{' entiere' if une.get('image_entiere') else ''}"><img src="{esc(vignette(une['image'], 1200))}"{position(une)} alt="{esc(une.get('image_alt') or une['title'])}"></div>
   <div>
     <span class="surtitre">{esc(une['libelle'])}</span>
     <h2>{esc(une['title'])}</h2>

@@ -208,6 +208,7 @@ def charger():
         if meta.get("brouillon"):
             continue
         meta["section"] = section(meta)
+        meta["libelle"] = dict(RUBRIQUES).get(meta["section"], meta["rubrique"])  # étiquette affichée = rubrique de navigation
         meta["minutes"] = lecture(meta["corps"])
         arts.append(meta)
     arts.sort(key=lambda a: a["date"], reverse=True)
@@ -225,7 +226,7 @@ def carte(a):
     entiere = " entiere" if a.get("image_entiere") else ""
     return f"""<a class="carte" href="{a['slug']}.html">
   <div class="carte-image{entiere}"><img src="{esc(vignette(a['image'], 720))}" alt="{esc(a.get('image_alt') or a['title'])}" loading="lazy"></div>
-  <span class="surtitre">{esc(a['rubrique'])}</span>
+  <span class="surtitre">{esc(a['libelle'])}</span>
   <h3>{esc(a['title'])}</h3>
   <p>{esc(a['excerpt'])}</p>
   <div class="meta"><span>{date_fr(a['date'])}</span><span>{a['minutes']} min</span></div>
@@ -233,7 +234,7 @@ def carte(a):
 
 
 def ligne(a):
-    return f"""<a href="{a['slug']}.html"><img class="{'entiere' if a.get('image_entiere') else ''}" src="{esc(vignette(a['image'], 300))}" alt="" loading="lazy"><div><span class="surtitre">{esc(a['rubrique'])}</span><h3>{esc(a['title'])}</h3></div></a>"""
+    return f"""<a href="{a['slug']}.html"><img class="{'entiere' if a.get('image_entiere') else ''}" src="{esc(vignette(a['image'], 300))}" alt="" loading="lazy"><div><span class="surtitre">{esc(a['libelle'])}</span><h3>{esc(a['title'])}</h3></div></a>"""
 
 
 def titre_h1(a):
@@ -261,7 +262,7 @@ def article(a, tous):
     suite = "".join(carte(b) for b in voisins[:3])
     contenu = f"""<article>
 <header class="article-entete">
-  <a class="surtitre" href="rubrique-{a['section']}.html">{esc(a['rubrique'])}</a>
+  <a class="surtitre" href="rubrique-{a['section']}.html">{esc(a['libelle'])}</a>
   <h1>{titre_h1(a)}</h1>
   <p class="chapo">{a['deck']}</p>
   <div class="meta"><span>La rédaction</span><span><time datetime="{a['date']}">{date_fr(a['date'])}</time></span><span>{a['minutes']} min de lecture</span></div>
@@ -289,7 +290,7 @@ def accueil(arts):
 <a class="une" href="{une['slug']}.html">
   <div class="une-image{' entiere' if une.get('image_entiere') else ''}"><img src="{esc(vignette(une['image'], 1200))}" alt="{esc(une.get('image_alt') or une['title'])}"></div>
   <div>
-    <span class="surtitre">{esc(une['rubrique'])}</span>
+    <span class="surtitre">{esc(une['libelle'])}</span>
     <h2>{esc(une['title'])}</h2>
     <p>{esc(une['excerpt'])}</p>
     <div class="meta"><span>{date_fr(une['date'])}</span><span>{une['minutes']} min de lecture</span></div>

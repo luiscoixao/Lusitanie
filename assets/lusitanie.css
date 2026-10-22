@@ -266,6 +266,7 @@ a { color: inherit; }
   .article-entete { padding-top: 32px; text-align: left; }
   .chapo { font-size: 1.15rem; }
   .article-visuel { padding: 0; }
+  .article-visuel figcaption { padding: 8px 20px 0; }
   .encart-produit > div { grid-template-columns: 1fr; }
   .pied .wrap { grid-template-columns: 1fr; }
   .pied nav { justify-content: flex-start; }

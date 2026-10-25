@@ -179,7 +179,7 @@ def page(titre, description, contenu, *, canonical, image=None, courant=None, ty
 <div class="barre"><div class="wrap"><span class="date">{aujourd_hui}</span><nav>{liens}</nav></div></div>
 <header class="entete">
   <a class="logo" href="index.html">LUSITANIE</a>
-  <p class="devise">Culture portugaise et lusophone</p>
+  <p class="devise">Culture portugaise, histoire et mémoire</p>
   <nav class="rubriques" aria-label="Rubriques"><ul>{nav}</ul></nav>
 </header>
 <main>
@@ -187,7 +187,7 @@ def page(titre, description, contenu, *, canonical, image=None, courant=None, ty
 </main>
 {boutique()}
 <footer class="pied"><div class="wrap">
-  <div><a class="logo" href="index.html">LUSITANIE</a><p>Culture portugaise et lusophone.</p></div>
+  <div><a class="logo" href="index.html">LUSITANIE</a><p>Culture portugaise, histoire et mémoire.</p></div>
   <nav>{liens}<a href="a-propos.html">À propos</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></nav>
 </div></footer>
 </body>
@@ -310,7 +310,7 @@ def accueil(arts):
 <div class="liste-compacte">{''.join(ligne(a) for a in reste[9:])}</div>
 """
     contenu += "</div>"
-    return page("Lusitanie — Culture portugaise et lusophone",
+    return page("Lusitanie — Culture portugaise, histoire et mémoire",
                 "Lusitanie : la culture portugaise et lusophone. Fado, littérature, histoire, voyage, diaspora, football.",
                 contenu, canonical=f"{SITE}/", image=une.get("image"),
                 donnees=[{"@context": "https://schema.org", "@type": "WebSite", "name": "Lusitanie",

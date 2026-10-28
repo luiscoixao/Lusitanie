@@ -71,8 +71,8 @@ def lecture(corps):
 # Ne lister que les produits visibles sur payhip.com/Lusitanie.
 PAYHIP_IMG = "https://payhip.com/cdn-cgi/image/format=auto,width=500/https://pe56d.s3.amazonaws.com/"
 BOUTIQUE = [
-    ("k9hip", "Le bidonville de Champigny-sur-Marne", "Récit audio", "1,00 €",
-     PAYHIP_IMG + "o_1k5rber1c1e841fmt17flto1bnd1f.jpeg"),
+    ("k9hip", "Le bidonville de Champigny-sur-Marne", "Livre audio", "1,00 €",
+     PAYHIP_IMG + "o_1k61vi8dh1rlk19bmrnc1rmr1f7d1f.jpg"),
     ("ubEdI", "Les oubliés de la Lys — Le Portugal dans la Grande Guerre", "Livre audio", "2,00 €",
      PAYHIP_IMG + "o_1k61tfept1142j0l1p541le3137r1a.jpg"),
     ("71Wiz", "L'émigration portugaise vers la France racontée par les enfants", "Livre audio", "Prix libre",

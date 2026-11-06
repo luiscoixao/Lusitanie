@@ -75,8 +75,10 @@ BOUTIQUE = [
      PAYHIP_IMG + "o_1k61vi8dh1rlk19bmrnc1rmr1f7d1f.jpg"),
     ("ubEdI", "Les oubliés de la Lys — Le Portugal dans la Grande Guerre", "Livre audio", "2,00 €",
      PAYHIP_IMG + "o_1k61tfept1142j0l1p541le3137r1a.jpg"),
-    ("71Wiz", "L'émigration portugaise vers la France racontée par les enfants", "Livre audio", "Prix libre",
-     PAYHIP_IMG + "o_1k61bdc10v818p9d5d70erpn1r.jpg"),
+    ("5vxGj", "L'émigration portugaise vers la France racontée par les enfants", "Livre numérique", "Prix libre",
+     PAYHIP_IMG + "o_1k6lv7efd1iht1urt1h0i1ooo1i1f1f.jpg"),
+    ("GXDCf", "L'émigration portugaise vers la France racontée par les enfants", "Livre audio", "Prix libre",
+     PAYHIP_IMG + "o_1k6ln8e4ji5n3ch1oetl7il1c1f.jpg"),
     ("6YWyV", "Portugal — Là où finit la terre, là où commence l'horizon", "Ebook", "7,00 €", "6YWyV"),
 ]
 

@@ -7,7 +7,7 @@
   var bouton = bloc.querySelector(".ecouter-bouton");
   var stop = bloc.querySelector(".ecouter-stop");
   var etat = "arret"; // arret | lecture | pause
-  var morceaux = [], index = 0, voix = null;
+  var morceaux = [], index = 0, voix = null, courant = null, jeton = 0;
 
   function choisirVoix() {
     var liste = synth.getVoices().filter(function (v) { return /^fr/i.test(v.lang); });
@@ -59,27 +59,37 @@
   function lireSuivant() {
     if (etat !== "lecture") return;
     if (index >= morceaux.length) { etat = "arret"; index = 0; afficher(); return; }
+    var monJeton = ++jeton;
     var u = new SpeechSynthesisUtterance(morceaux[index]);
+    courant = u; // garder une référence : sinon Safari perd l'événement de fin
     u.lang = "fr-FR";
     if (voix) u.voice = voix;
     u.rate = 1;
-    u.onend = function () { index++; lireSuivant(); };
-    u.onerror = function (e) { if (e.error !== "interrupted" && e.error !== "canceled") { index++; lireSuivant(); } };
+    u.onend = function () { if (monJeton !== jeton) return; index++; lireSuivant(); };
+    u.onerror = function (e) {
+      if (monJeton !== jeton || e.error === "interrupted" || e.error === "canceled") return;
+      if (e.error === "voice-unavailable" || e.error === "synthesis-failed") voix = null;
+      index++; lireSuivant();
+    };
     synth.speak(u);
   }
 
+  // Pause = on arrête la phrase en cours et on reprendra au début de celle-ci
+  // (pause()/resume() sont peu fiables sur iPhone et Android).
+  function couper() { jeton++; if (synth.speaking || synth.pending) synth.cancel(); }
+
   bouton.addEventListener("click", function () {
+    if (!voix) voix = choisirVoix();
     if (etat === "arret") {
-      synth.cancel();
+      couper();
       morceaux = texteArticle(); index = 0; etat = "lecture"; afficher(); lireSuivant();
     } else if (etat === "lecture") {
-      etat = "pause"; synth.pause(); afficher();
+      etat = "pause"; couper(); afficher();
     } else {
-      etat = "lecture"; afficher();
-      if (synth.paused) synth.resume(); else lireSuivant();
+      etat = "lecture"; afficher(); lireSuivant();
     }
   });
-  stop.addEventListener("click", function () { etat = "arret"; index = 0; synth.cancel(); afficher(); });
+  stop.addEventListener("click", function () { etat = "arret"; index = 0; couper(); afficher(); });
   window.addEventListener("pagehide", function () { synth.cancel(); });
 
   bloc.hidden = false;

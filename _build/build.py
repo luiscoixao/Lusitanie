@@ -263,7 +263,7 @@ def article(a, tous):
   <h1>{titre_h1(a)}</h1>
   <p class="chapo">{a['deck']}</p>
   <div class="meta"><span>La rédaction</span><span><time datetime="{a['date']}">{date_fr(a['date'])}</time></span><span>{a['minutes']} min de lecture</span></div>
-  <div class="ecouter" hidden><button type="button" class="ecouter-bouton">▶ Écouter l'article</button><button type="button" class="ecouter-stop" aria-label="Arrêter la lecture" hidden>■</button><span class="ecouter-note">voix de synthèse</span></div>
+  <div class="ecouter" hidden><button type="button" class="ecouter-bouton">▶ Écouter l'article</button><button type="button" class="ecouter-stop" aria-label="Arrêter la lecture" hidden>■</button></div>
 </header>
 {visuel}
 {exergue}

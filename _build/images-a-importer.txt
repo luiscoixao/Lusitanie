@@ -1,2 +1,0 @@
-richebourg-cimetiere-portugais.jpg https://upload.wikimedia.org/wikipedia/commons/6/69/Richebourg_cimeti%C3%A8re_portugais_g%C3%A9n%C3%A9rale.jpg
-richebourg-meta.json https://commons.wikimedia.org/w/api.php?action=query&titles=File:Richebourg_cimeti%C3%A8re_portugais_g%C3%A9n%C3%A9rale.jpg&prop=imageinfo&iiprop=extmetadata|size&format=json

@@ -96,6 +96,7 @@ def boutique():
 </div></section>"""
 
 
+JS_VERSION = __import__("hashlib").md5(open(os.path.join(ROOT, "assets", "ecouter.js"), "rb").read()).hexdigest()[:8]
 CSS_VERSION = __import__("hashlib").md5(open(os.path.join(ROOT, "assets", "lusitanie.css"), "rb").read()).hexdigest()[:8]
 
 
@@ -262,6 +263,7 @@ def article(a, tous):
   <h1>{titre_h1(a)}</h1>
   <p class="chapo">{a['deck']}</p>
   <div class="meta"><span>La rédaction</span><span><time datetime="{a['date']}">{date_fr(a['date'])}</time></span><span>{a['minutes']} min de lecture</span></div>
+  <div class="ecouter" hidden><button type="button" class="ecouter-bouton">▶ Écouter l'article</button><button type="button" class="ecouter-stop" aria-label="Arrêter la lecture" hidden>■</button><span class="ecouter-note">voix de synthèse</span></div>
 </header>
 {visuel}
 {exergue}
@@ -271,6 +273,7 @@ def article(a, tous):
 {source}
 {encarts}
 </article>
+<script src="assets/ecouter.js?v={JS_VERSION}" defer></script>
 <div class="wrap"><h2 class="titre-section">À lire aussi</h2><div class="grille">{suite}</div></div>"""
     titre = f"{a['title']} — Lusitanie"
     return page(titre, a.get("description") or a["excerpt"], contenu,

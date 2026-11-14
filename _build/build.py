@@ -106,7 +106,6 @@ def boutique():
 </div></section>"""
 
 
-JS_VERSION = __import__("hashlib").md5(open(os.path.join(ROOT, "assets", "ecouter.js"), "rb").read()).hexdigest()[:8]
 CSS_VERSION = __import__("hashlib").md5(open(os.path.join(ROOT, "assets", "lusitanie.css"), "rb").read()).hexdigest()[:8]
 
 
@@ -291,7 +290,6 @@ def article(a, tous, trads=()):
   <p class="chapo">{a['deck']}</p>
   <div class="meta"><span>{'A redação' if pt else 'La rédaction'}</span><span><time datetime="{a['date']}">{date_pt(a['date']) if pt else date_fr(a['date'])}</time></span><span>{a['minutes']} {'min de leitura' if pt else 'min de lecture'}</span></div>
   {langue}
-  <div class="ecouter" hidden><button type="button" class="ecouter-bouton">{'▶ Ouvir o artigo' if pt else "▶ Écouter l'article"}</button><button type="button" class="ecouter-stop" aria-label="Arrêter la lecture" hidden>■</button></div>
 </header>
 {visuel}
 {exergue}
@@ -301,7 +299,6 @@ def article(a, tous, trads=()):
 {source}
 {encarts}
 </article>
-<script src="assets/ecouter.js?v={JS_VERSION}" defer></script>
 <div class="wrap"><h2 class="titre-section">{'Leia também (em francês)' if pt else 'À lire aussi'}</h2><div class="grille">{suite}</div></div>"""
     titre = a.get("seo_title") or f"{a['title']} — Lusitanie"
     return page(titre, a.get("description") or a["excerpt"], contenu,

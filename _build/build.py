@@ -274,7 +274,7 @@ def article(a, tous):
 </article>
 <script src="assets/ecouter.js?v={JS_VERSION}" defer></script>
 <div class="wrap"><h2 class="titre-section">À lire aussi</h2><div class="grille">{suite}</div></div>"""
-    titre = f"{a['title']} — Lusitanie"
+    titre = a.get("seo_title") or f"{a['title']} — Lusitanie"
     return page(titre, a.get("description") or a["excerpt"], contenu,
                 canonical=f"{SITE}/{a['slug']}.html", image=a.get("image"),
                 courant=a["section"], type_og="article",

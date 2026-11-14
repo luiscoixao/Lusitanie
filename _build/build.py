@@ -57,6 +57,15 @@ def date_fr(iso):
     return f"{d.day}{'er' if d.day == 1 else ''} {MOIS[d.month - 1]} {d.year}"
 
 
+MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto",
+         "setembro", "outubro", "novembro", "dezembro"]
+
+
+def date_pt(iso):
+    d = datetime.date.fromisoformat(iso)
+    return f"{d.day} de {MESES[d.month - 1]} de {d.year}"
+
+
 def section(a):
     return SECTION_DE.get(a["rubrique"].lower(), a.get("cat") or "culture")
 
@@ -122,7 +131,7 @@ def ld_article(a, url):
         "headline": a["title"][:110],
         "description": a.get("description") or a["excerpt"],
         "datePublished": a["date"], "dateModified": a.get("maj") or a["date"],
-        "inLanguage": "fr", "articleSection": a["rubrique"],
+        "inLanguage": a.get("lang", "fr"), "articleSection": a["rubrique"],
         "mainEntityOfPage": url, "url": url,
         "author": EDITEUR, "publisher": EDITEUR,
     }
@@ -135,7 +144,7 @@ def ld_article(a, url):
     return [article, fil]
 
 
-def page(titre, description, contenu, *, canonical, image=None, courant=None, type_og="website", donnees=None):
+def page(titre, description, contenu, *, canonical, image=None, courant=None, type_og="website", donnees=None, lang="fr", alternates=""):
     if image and not image.startswith("http"):
         image = f"{SITE}/{image}"
     og_img = f'\n<meta property="og:image" content="{esc(image)}">' if image else ""
@@ -145,14 +154,14 @@ def page(titre, description, contenu, *, canonical, image=None, courant=None, ty
     liens = "".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LIENS)
     aujourd_hui = date_fr(datetime.date.today().isoformat())
     return f"""<!DOCTYPE html>
-<html lang="fr">
+<html lang="{lang}">
 <head>
 {HEAD_TRACKING}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(titre)}</title>
 <meta name="description" content="{esc(description)}">
-<link rel="canonical" href="{canonical}">
+<link rel="canonical" href="{canonical}">{alternates}
 <meta property="og:title" content="{esc(titre)}">
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:type" content="{type_og}">
@@ -202,7 +211,9 @@ def charger():
         meta["minutes"] = lecture(meta["corps"])
         arts.append(meta)
     arts.sort(key=lambda a: a["date"], reverse=True)
-    return arts
+    trads = [a for a in arts if a.get("traduction_de")]
+    arts = [a for a in arts if not a.get("traduction_de")]
+    return arts, trads
 
 
 def vignette(img, w):
@@ -240,7 +251,7 @@ def titre_h1(a):
     return esc(a["title"])
 
 
-def article(a, tous):
+def article(a, tous, trads=()):
     ep = a.get("epigraph")
     exergue = ""
     if ep and ep.get("text"):
@@ -253,16 +264,32 @@ def article(a, tous):
         externe = ' target="_blank" rel="noopener"' if x["href"].startswith("http") else ""
         encarts += f"""<aside class="encart-produit"><div><div><span class="surtitre">{esc(x['label'])}</span><h3>{esc(x['title'])}</h3><p>{x['desc']}</p></div><a class="bouton" href="{esc(x['href'])}"{externe}>{esc(x['button'] or 'Découvrir')}</a></div></aside>"""
     source = ""
+    pt = a.get("lang", "fr").startswith("pt")
+    if a.get("traduction_de"):
+        orig = a["traduction_de"]
+        paires = [("fr", orig), (a["lang"], a["slug"])]
+    else:
+        paires = [("fr", a["slug"])] + [(t["lang"], t["slug"]) for t in trads if t["traduction_de"] == a["slug"]]
+    alternates = ""
+    langue = ""
+    if len(paires) > 1:
+        alternates = "".join(f'\n<link rel="alternate" hreflang="{l}" href="{SITE}/{s}.html">' for l, s in paires)
+        alternates += f'\n<link rel="alternate" hreflang="x-default" href="{SITE}/{paires[0][1]}.html">'
+        if a.get("traduction_de"):
+            langue = f'<p class="langue"><a href="{paires[0][1]}.html" hreflang="fr" lang="fr">Lire en français</a></p>'
+        else:
+            langue = "".join(f'<p class="langue"><a href="{s}.html" hreflang="{l}" lang="{l}">Ler em português</a></p>' for l, s in paires[1:] if l.startswith("pt"))
     voisins = [b for b in tous if b["slug"] != a["slug"] and b["section"] == a["section"]]
     voisins += [b for b in tous if b["slug"] != a["slug"] and b not in voisins]
     suite = "".join(carte(b) for b in voisins[:3])
     contenu = f"""<article>
 <header class="article-entete">
-  <a class="surtitre" href="rubrique-{a['section']}.html">{esc(a['libelle'])}</a>
+  <a class="surtitre" href="rubrique-{a['section']}.html">{esc(a.get('rubrique_affichee') or a['libelle'])}</a>
   <h1>{titre_h1(a)}</h1>
   <p class="chapo">{a['deck']}</p>
-  <div class="meta"><span>La rédaction</span><span><time datetime="{a['date']}">{date_fr(a['date'])}</time></span><span>{a['minutes']} min de lecture</span></div>
-  <div class="ecouter" hidden><button type="button" class="ecouter-bouton">▶ Écouter l'article</button><button type="button" class="ecouter-stop" aria-label="Arrêter la lecture" hidden>■</button></div>
+  <div class="meta"><span>{'A redação' if pt else 'La rédaction'}</span><span><time datetime="{a['date']}">{date_pt(a['date']) if pt else date_fr(a['date'])}</time></span><span>{a['minutes']} {'min de leitura' if pt else 'min de lecture'}</span></div>
+  {langue}
+  <div class="ecouter" hidden><button type="button" class="ecouter-bouton">{'▶ Ouvir o artigo' if pt else "▶ Écouter l'article"}</button><button type="button" class="ecouter-stop" aria-label="Arrêter la lecture" hidden>■</button></div>
 </header>
 {visuel}
 {exergue}
@@ -273,12 +300,13 @@ def article(a, tous):
 {encarts}
 </article>
 <script src="assets/ecouter.js?v={JS_VERSION}" defer></script>
-<div class="wrap"><h2 class="titre-section">À lire aussi</h2><div class="grille">{suite}</div></div>"""
+<div class="wrap"><h2 class="titre-section">{'Leia também (em francês)' if pt else 'À lire aussi'}</h2><div class="grille">{suite}</div></div>"""
     titre = a.get("seo_title") or f"{a['title']} — Lusitanie"
     return page(titre, a.get("description") or a["excerpt"], contenu,
                 canonical=f"{SITE}/{a['slug']}.html", image=a.get("image"),
                 courant=a["section"], type_og="article",
-                donnees=ld_article(a, f"{SITE}/{a['slug']}.html"))
+                donnees=ld_article(a, f"{SITE}/{a['slug']}.html"),
+                lang=a.get("lang", "fr"), alternates=alternates)
 
 
 def accueil(arts):
@@ -331,10 +359,10 @@ def pages_simples():
         yield fn, page(titre, titre, f'<div class="page">{corps}</div>', canonical=f"{SITE}/{fn}")
 
 
-def sitemap(arts):
+def sitemap(arts, trads=()):
     urls = [(f"{SITE}/", datetime.date.today().isoformat(), "1.0")]
     urls += [(f"{SITE}/rubrique-{s}.html", datetime.date.today().isoformat(), "0.6") for s, _ in RUBRIQUES]
-    urls += [(f"{SITE}/{a['slug']}.html", a.get("maj") or a["date"], "0.9") for a in arts]
+    urls += [(f"{SITE}/{a['slug']}.html", a.get("maj") or a["date"], "0.9") for a in list(arts) + list(trads)]
     lignes = "".join(f"  <url><loc>{u}</loc><lastmod>{d}</lastmod><priority>{p}</priority></url>\n" for u, d, p in urls)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{lignes}</urlset>\n'
 
@@ -345,15 +373,17 @@ def ecrire(nom, contenu):
 
 
 def main():
-    arts = charger()
+    arts, trads = charger()
     for a in arts:
-        ecrire(f"{a['slug']}.html", article(a, arts))
+        ecrire(f"{a['slug']}.html", article(a, arts, trads))
+    for a in trads:
+        ecrire(f"{a['slug']}.html", article(a, arts, trads))
     ecrire("index.html", accueil(arts))
     for s, l in RUBRIQUES:
         ecrire(f"rubrique-{s}.html", rubrique(s, l, arts))
     for fn, contenu in pages_simples():
         ecrire(fn, contenu)
-    ecrire("sitemap.xml", sitemap(arts))
+    ecrire("sitemap.xml", sitemap(arts, trads))
     print(f"{len(arts)} articles générés.")
     for s, l in RUBRIQUES:
         print(f"  {l}: {sum(1 for a in arts if a['section'] == s)}")

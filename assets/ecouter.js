@@ -8,15 +8,20 @@
   var stop = bloc.querySelector(".ecouter-stop");
   var etat = "arret"; // arret | lecture | pause
   var morceaux = [], index = 0, voix = null, courant = null, jeton = 0;
+  var pt = /^pt/i.test(document.documentElement.lang || "");
+  var LANGUE = pt ? "pt-PT" : "fr-FR";
+  var TXT = pt ? { lire: "▶ Ouvir o artigo", pause: "❚❚ Pausa", reprendre: "▶ Continuar" }
+               : { lire: "▶ Écouter l'article", pause: "❚❚ Pause", reprendre: "▶ Reprendre" };
 
   function choisirVoix() {
-    var liste = synth.getVoices().filter(function (v) { return /^fr/i.test(v.lang); });
+    var prefixe = pt ? /^pt/i : /^fr/i;
+    var liste = synth.getVoices().filter(function (v) { return prefixe.test(v.lang); });
     if (!liste.length) return null;
     function score(v) {
       var s = 0;
-      if (/fr[-_]FR/i.test(v.lang)) s += 10;
+      if (pt ? /pt[-_]PT/i.test(v.lang) : /fr[-_]FR/i.test(v.lang)) s += 10;
       if (/premium|enhanced|natural|neural|online/i.test(v.name)) s += 6;
-      if (/am[ée]lie|audrey|thomas|marie|denise|henri|eloise|vivienne|remy|google/i.test(v.name)) s += 3;
+      if (/am[ée]lie|audrey|thomas|marie|denise|henri|eloise|vivienne|remy|joana|catarina|raquel|duarte|fernanda|google/i.test(v.name)) s += 3;
       if (/compact|eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley/i.test(v.name)) s -= 8;
       return s;
     }
@@ -51,7 +56,7 @@
   }
 
   function afficher() {
-    bouton.textContent = etat === "lecture" ? "❚❚ Pause" : etat === "pause" ? "▶ Reprendre" : "▶ Écouter l'article";
+    bouton.textContent = etat === "lecture" ? TXT.pause : etat === "pause" ? TXT.reprendre : TXT.lire;
     bouton.setAttribute("aria-pressed", etat === "lecture" ? "true" : "false");
     stop.hidden = etat === "arret";
   }
@@ -62,7 +67,7 @@
     var monJeton = ++jeton;
     var u = new SpeechSynthesisUtterance(morceaux[index]);
     courant = u; // garder une référence : sinon Safari perd l'événement de fin
-    u.lang = "fr-FR";
+    u.lang = LANGUE;
     if (voix) u.voice = voix;
     u.rate = 1;
     u.onend = function () { if (monJeton !== jeton) return; index++; lireSuivant(); };

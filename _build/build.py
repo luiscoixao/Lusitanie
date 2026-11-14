@@ -86,7 +86,7 @@ BOUTIQUE = [
      PAYHIP_IMG + "o_1k6lv7efd1iht1urt1h0i1ooo1i1f1f.jpg"),
     ("GXDCf", "L'émigration portugaise vers la France racontée par les enfants", "Livre audio", "Prix libre",
      PAYHIP_IMG + "o_1k61bdc10v818p9d5d70erpn1r.jpg"),
-    ("6YWyV", "Portugal — Là où finit la terre, là où commence l'horizon", "Ebook", "7,00 €", "6YWyV"),
+    ("6YWyV", "Portugal — Là où finit la terre, là où commence l'horizon", "Ebook", "Prix libre", "6YWyV"),
     ("tFoJq", "L'épopée maritime portugaise", "Livre audio", "Prix libre", "tFoJq"),
 ]
 

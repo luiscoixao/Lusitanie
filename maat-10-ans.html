@@ -32,7 +32,7 @@ j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..800;1,14..32,400..600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/lusitanie.css?v=2b90ff74">
+<link rel="stylesheet" href="assets/lusitanie.css?v=ac9ef8c3">
 <script type="application/ld+json">
 [
  {
@@ -123,6 +123,14 @@ j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
 
 </div>
 
+<div class="partage" data-url="https://lusitanie.blog/maat-10-ans.html" data-titre="Le MAAT a 10 ans">
+  <span class="partage-titre">Partager</span>
+  <button type="button" class="partage-natif" hidden>Partager</button>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flusitanie.blog%2Fmaat-10-ans.html" target="_blank" rel="noopener">Facebook</a>
+  <a href="https://wa.me/?text=Le%20MAAT%20a%2010%20ans%20https%3A%2F%2Flusitanie.blog%2Fmaat-10-ans.html" target="_blank" rel="noopener">WhatsApp</a>
+  <button type="button" class="partage-copier" data-ok="Lien copié">Copier le lien</button>
+</div>
+<script>(function(){var b=document.querySelector(".partage");if(!b)return;var url=b.dataset.url,ti=b.dataset.titre,n=b.querySelector(".partage-natif"),c=b.querySelector(".partage-copier");if(navigator.share){n.hidden=false;n.addEventListener("click",function(){navigator.share({title:ti,url:url}).catch(function(){});});}c.addEventListener("click",function(){var lbl=c.textContent;(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){c.textContent=c.dataset.ok;setTimeout(function(){c.textContent=lbl;},2000);}).catch(function(){window.prompt("",url);});});})();</script>
 
 </article>
 <div class="wrap"><h2 class="titre-section">À lire aussi</h2><div class="grille"><a class="carte" href="leffest-2026.html">

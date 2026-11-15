@@ -252,6 +252,23 @@ def titre_h1(a):
     return esc(a["title"])
 
 
+
+def partage(a, pt):
+    """Barre de partage en bas d'article : partage natif sur téléphone, sinon Facebook, WhatsApp, copier le lien."""
+    url = f"{SITE}/{a['slug']}.html"
+    from urllib.parse import quote
+    u = quote(url, safe="")
+    t = quote(a["title"], safe="")
+    L = ("Partilhar", "Copiar a ligação", "Ligação copiada") if pt else ("Partager", "Copier le lien", "Lien copié")
+    return f"""<div class="partage" data-url="{esc(url)}" data-titre="{esc(a['title'])}">
+  <span class="partage-titre">{L[0]}</span>
+  <button type="button" class="partage-natif" hidden>{L[0]}</button>
+  <a href="https://www.facebook.com/sharer/sharer.php?u={u}" target="_blank" rel="noopener">Facebook</a>
+  <a href="https://wa.me/?text={t}%20{u}" target="_blank" rel="noopener">WhatsApp</a>
+  <button type="button" class="partage-copier" data-ok="{L[2]}">{L[1]}</button>
+</div>
+<script>(function(){{var b=document.querySelector(".partage");if(!b)return;var url=b.dataset.url,ti=b.dataset.titre,n=b.querySelector(".partage-natif"),c=b.querySelector(".partage-copier");if(navigator.share){{n.hidden=false;n.addEventListener("click",function(){{navigator.share({{title:ti,url:url}}).catch(function(){{}});}});}}c.addEventListener("click",function(){{var lbl=c.textContent;(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){{c.textContent=c.dataset.ok;setTimeout(function(){{c.textContent=lbl;}},2000);}}).catch(function(){{window.prompt("",url);}});}});}})();</script>"""
+
 def article(a, tous, trads=()):
     ep = a.get("epigraph")
     exergue = ""
@@ -297,6 +314,7 @@ def article(a, tous, trads=()):
 {a['corps']}
 </div>
 {source}
+{partage(a, pt)}
 {encarts}
 </article>
 <div class="wrap"><h2 class="titre-section">{'Leia também (em francês)' if pt else 'À lire aussi'}</h2><div class="grille">{suite}</div></div>"""

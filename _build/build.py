@@ -80,6 +80,8 @@ def lecture(corps):
 # Ne lister que les produits visibles sur payhip.com/Lusitanie.
 PAYHIP_IMG = "https://payhip.com/cdn-cgi/image/format=auto,width=500/https://pe56d.s3.amazonaws.com/"
 BOUTIQUE = [
+    ("8h6fU", "Le Portugal dans la Grande Guerre — De l'Afrique aux tranchées de la Lys", "Livre numérique", "Prix libre",
+     PAYHIP_IMG + "o_1k7nmr1k67qtnuq61i7lua6u1f.jpg"),
     ("9WB5R", "Les oubliés de la Lys — Le Portugal dans la Grande Guerre", "Livre audio", "Prix libre",
      PAYHIP_IMG + "o_1k7dekh0nteshlf7gn1aqi1iu61f.jpg"),
     ("5vxGj", "L'émigration portugaise vers la France racontée par les enfants", "Livre numérique", "Prix libre",

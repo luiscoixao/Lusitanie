@@ -1,0 +1,6 @@
+ch6-carte-lys.jpg https://upload.wikimedia.org/wikipedia/commons/5/53/Battle_of_the_Lys%2C_April_1918.jpg
+ch6-prisonniers.jpg https://upload.wikimedia.org/wikipedia/commons/6/63/Prisioneiros_ingleses_portugueses_09_04_1918.jpg
+ch7-milhais.jpg https://upload.wikimedia.org/wikipedia/commons/9/9d/Anibal_Milhais.jpg
+ch7-monument-murca.jpg https://upload.wikimedia.org/wikipedia/commons/8/89/Monumento_ao_Her%C3%B3i_Milh%C3%B5es_-_Mur%C3%A7a_-_Portugal_%287837100248%29.jpg
+ch10-batalha.jpg https://upload.wikimedia.org/wikipedia/commons/a/a6/T%C3%BAmulo_do_Soldado_Desconhecido_-_Mosteiro_de_Santa_Maria_da_Vit%C3%B3ria_-_Batalha_-_Portugal_%284817863284%29.jpg
+ch10-monument-lisbonne.jpg https://upload.wikimedia.org/wikipedia/commons/3/32/Monumento_aos_Mortos_da_Grande_Guerra.JPG

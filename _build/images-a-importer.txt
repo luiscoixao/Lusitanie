@@ -1,0 +1,16 @@
+ch2-embarque-angola.jpg https://upload.wikimedia.org/wikipedia/commons/b/b2/Embarque_tropas_para_angola_2.jpg
+ch2-massano-amorim.png https://upload.wikimedia.org/wikipedia/commons/b/bf/Tenente-Coronel_Massano_de_Amorim%2C_Comandante_da_Expedi%C3%A7%C3%A3o_Militar_a_Mo%C3%A7ambique_-_O_Occidente_%2810Set1914%29.png
+ch2-lettow-vorbeck.jpg https://upload.wikimedia.org/wikipedia/commons/0/06/Paul_Emil_von_Lettow-Vorbeck.jpg
+ch3-augusto-castilho.jpg https://upload.wikimedia.org/wikipedia/commons/2/24/NRP_AUGUSTO_DE_CASTILHO.jpg
+ch3-funchal-1921.jpg https://upload.wikimedia.org/wikipedia/commons/8/88/Homenagem_aos_mortos_madeirenses_e_franceses_do_bombardeamento_do_Funchal_de_1916_-_1921-12-03_-_Image_217333.jpg
+ch3-carvalho-araujo.png https://upload.wikimedia.org/wikipedia/commons/5/53/Jos%C3%A9_Botelho_de_Carvalho_Araujo_%28As_Constituintes_de_1911_e_os_seus_Deputados%2C_Livr._Ferreira%2C_1911%29.png
+ch4-brest-1.jpg https://upload.wikimedia.org/wikipedia/commons/3/31/D%C3%A9barquement_de_Portugais_%C3%A0_Brest_-_btv1b6953057z.jpg
+ch4-brest-2.jpg https://upload.wikimedia.org/wikipedia/commons/d/d6/D%C3%A9barquement_des_Portugais_%C3%A0_Brest_-_btv1b6953059s.jpg
+ch5-sidonio-pais.png https://upload.wikimedia.org/wikipedia/commons/9/9b/Sid%C3%B3nio_Pais%2C_phot._Bobone.png
+ch5-bernardino-exil.png https://upload.wikimedia.org/wikipedia/commons/3/3b/Bernardino_Machado_a_bordo_do_comboio_que_o_vai_conduzir_ao_ex%C3%ADlio_em_Paris%2C_na_sequ%C3%AAncia_da_revolu%C3%A7%C3%A3o_de_Sid%C3%B3nio_Pais%2C_1917.png
+ch6-carte-lys.jpg https://upload.wikimedia.org/wikipedia/commons/5/53/Battle_of_the_Lys%2C_April_1918.jpg
+ch6-prisonniers.jpg https://upload.wikimedia.org/wikipedia/commons/6/63/Prisioneiros_ingleses_portugueses_09_04_1918.jpg
+ch7-milhais.jpg https://upload.wikimedia.org/wikipedia/commons/9/9d/Anibal_Milhais.jpg
+ch7-monument-murca.jpg https://upload.wikimedia.org/wikipedia/commons/8/89/Monumento_ao_Her%C3%B3i_Milh%C3%B5es_-_Mur%C3%A7a_-_Portugal_%287837100248%29.jpg
+ch10-batalha.jpg https://upload.wikimedia.org/wikipedia/commons/a/a6/T%C3%BAmulo_do_Soldado_Desconhecido_-_Mosteiro_de_Santa_Maria_da_Vit%C3%B3ria_-_Batalha_-_Portugal_%284817863284%29.jpg
+ch10-monument-lisbonne.jpg https://upload.wikimedia.org/wikipedia/commons/3/32/Monumento_aos_Mortos_da_Grande_Guerra.JPG

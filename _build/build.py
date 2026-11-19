@@ -256,20 +256,16 @@ def titre_h1(a):
 
 
 def partage(a, pt):
-    """Barre de partage en bas d'article : partage natif sur téléphone, sinon Facebook, WhatsApp, copier le lien."""
+    """Petite icône de partage dans la ligne d'infos : partage natif sur téléphone, sinon copie du lien."""
     url = f"{SITE}/{a['slug']}.html"
-    from urllib.parse import quote
-    u = quote(url, safe="")
-    t = quote(a["title"], safe="")
-    L = ("Partilhar", "Copiar a ligação", "Ligação copiada") if pt else ("Partager", "Copier le lien", "Lien copié")
-    return f"""<div class="partage" data-url="{esc(url)}" data-titre="{esc(a['title'])}">
-  <span class="partage-titre">{L[0]}</span>
-  <button type="button" class="partage-natif" hidden>{L[0]}</button>
-  <a href="https://www.facebook.com/sharer/sharer.php?u={u}" target="_blank" rel="noopener">Facebook</a>
-  <a href="https://wa.me/?text={t}%20{u}" target="_blank" rel="noopener">WhatsApp</a>
-  <button type="button" class="partage-copier" data-ok="{L[2]}">{L[1]}</button>
-</div>
-<script>(function(){{var b=document.querySelector(".partage");if(!b)return;var url=b.dataset.url,ti=b.dataset.titre,n=b.querySelector(".partage-natif"),c=b.querySelector(".partage-copier");if(navigator.share){{n.hidden=false;n.addEventListener("click",function(){{navigator.share({{title:ti,url:url}}).catch(function(){{}});}});}}c.addEventListener("click",function(){{var lbl=c.textContent;(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){{c.textContent=c.dataset.ok;setTimeout(function(){{c.textContent=lbl;}},2000);}}).catch(function(){{window.prompt("",url);}});}});}})();</script>"""
+    L = ("Partilhar", "Ligação copiada") if pt else ("Partager", "Lien copié")
+    return (f'<button type="button" class="partage-icone" data-url="{esc(url)}" data-titre="{esc(a["title"])}" data-ok="{L[1]}" title="{L[0]}" aria-label="{L[0]}">'
+            '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'
+            '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>'
+            '<line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></button>'
+            '<script>(function(){var b=document.querySelector(".partage-icone");if(!b)return;b.addEventListener("click",function(){var url=b.dataset.url;'
+            'if(navigator.share){navigator.share({title:b.dataset.titre,url:url}).catch(function(){});return;}'
+            '(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){b.classList.add("ok");b.setAttribute("data-msg",b.dataset.ok);setTimeout(function(){b.classList.remove("ok");},2000);}).catch(function(){window.prompt("",url);});});})();</script>')
 
 def article(a, tous, trads=()):
     ep = a.get("epigraph")
@@ -307,7 +303,7 @@ def article(a, tous, trads=()):
   <a class="surtitre" href="rubrique-{a['section']}.html">{esc(a.get('rubrique_affichee') or a['libelle'])}</a>
   <h1>{titre_h1(a)}</h1>
   <p class="chapo">{a['deck']}</p>
-  <div class="meta"><span>{'A redação' if pt else 'La rédaction'}</span><span><time datetime="{a['date']}">{date_pt(a['date']) if pt else date_fr(a['date'])}</time></span><span>{a['minutes']} {'min de leitura' if pt else 'min de lecture'}</span></div>
+  <div class="meta"><span>{'A redação' if pt else 'La rédaction'}</span><span><time datetime="{a['date']}">{date_pt(a['date']) if pt else date_fr(a['date'])}</time></span><span>{a['minutes']} {'min de leitura' if pt else 'min de lecture'}</span>{partage(a, pt)}</div>
   {langue}
 </header>
 {visuel}
@@ -316,7 +312,6 @@ def article(a, tous, trads=()):
 {a['corps']}
 </div>
 {source}
-{partage(a, pt)}
 {encarts}
 </article>
 <div class="wrap"><h2 class="titre-section">{'Leia também (em francês)' if pt else 'À lire aussi'}</h2><div class="grille">{suite}</div></div>"""

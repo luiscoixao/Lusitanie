@@ -342,11 +342,6 @@ h1, h2, h3, .une h2, .carte h3, .liste-compacte h3,
 .langue { margin: 12px 0 0; font-size: 0.9rem; }
 .langue a { color: var(--rouge); font-weight: 600; text-decoration: none; }
 .langue a:hover { text-decoration: underline; }
-.partage { max-width: var(--texte-largeur); margin: 36px auto 0; padding: 16px 20px 0; border-top: 1px solid var(--filet); display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-family: var(--sans); font-size: 0.85rem; }
-.partage-titre { color: var(--gris); margin-right: 4px; }
-.partage a, .partage button { font: inherit; color: var(--encre); background: none; border: 1px solid var(--filet); border-radius: 999px; padding: 6px 14px; cursor: pointer; text-decoration: none; }
-.partage a:hover, .partage button:hover { border-color: var(--encre); }
-.partage-natif:not([hidden]) ~ a { display: none; }
-.partage-natif:not([hidden]) { background: var(--encre); color: #fff; border-color: var(--encre); }
-.partage-natif:not([hidden]) ~ .partage-copier { display: none; }
-.partage:has(.partage-natif:not([hidden])) .partage-titre { display: none; }
+.partage-icone { position: relative; margin-left: 0.7em; padding: 2px; border: 0; background: none; color: var(--gris); cursor: pointer; vertical-align: -2px; line-height: 0; }
+.partage-icone:hover, .partage-icone:focus-visible { color: var(--encre); }
+.partage-icone.ok::after { content: attr(data-msg); position: absolute; left: 50%; bottom: 125%; transform: translateX(-50%); white-space: nowrap; font-size: 0.75rem; line-height: 1.4; color: #fff; background: var(--encre); padding: 2px 8px; border-radius: 4px; }

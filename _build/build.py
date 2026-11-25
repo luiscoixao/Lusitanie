@@ -89,7 +89,6 @@ BOUTIQUE = [
     ("GXDCf", "L'émigration portugaise vers la France racontée par les enfants", "Livre audio", "2,99 €",
      PAYHIP_IMG + "o_1k61bdc10v818p9d5d70erpn1r.jpg"),
     ("6YWyV", "Portugal — Là où finit la terre, là où commence l'horizon", "Ebook", "2,99 €", "6YWyV"),
-    ("tFoJq", "L'épopée maritime portugaise", "Livre audio", "3,99 €", "tFoJq"),
 ]
 
 

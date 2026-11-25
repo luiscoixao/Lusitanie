@@ -80,16 +80,16 @@ def lecture(corps):
 # Ne lister que les produits visibles sur payhip.com/Lusitanie.
 PAYHIP_IMG = "https://payhip.com/cdn-cgi/image/format=auto,width=500/https://pe56d.s3.amazonaws.com/"
 BOUTIQUE = [
-    ("8h6fU", "Le Portugal dans la Grande Guerre — De l'Afrique aux tranchées de la Lys", "Livre numérique", "Prix libre",
+    ("8h6fU", "Le Portugal dans la Grande Guerre — De l'Afrique aux tranchées de la Lys", "Livre numérique", "3,99 €",
      PAYHIP_IMG + "o_1k7nmr1k67qtnuq61i7lua6u1f.jpg"),
     ("9WB5R", "Les oubliés de la Lys — Le Portugal dans la Grande Guerre", "Livre audio", "Prix libre",
      PAYHIP_IMG + "o_1k7dekh0nteshlf7gn1aqi1iu61f.jpg"),
-    ("5vxGj", "L'émigration portugaise vers la France racontée par les enfants", "Livre numérique", "Prix libre",
+    ("5vxGj", "L'émigration portugaise vers la France racontée par les enfants", "Livre numérique", "3,99 €",
      PAYHIP_IMG + "o_1k6lv7efd1iht1urt1h0i1ooo1i1f1f.jpg"),
-    ("GXDCf", "L'émigration portugaise vers la France racontée par les enfants", "Livre audio", "Prix libre",
+    ("GXDCf", "L'émigration portugaise vers la France racontée par les enfants", "Livre audio", "2,99 €",
      PAYHIP_IMG + "o_1k61bdc10v818p9d5d70erpn1r.jpg"),
-    ("6YWyV", "Portugal — Là où finit la terre, là où commence l'horizon", "Ebook", "Prix libre", "6YWyV"),
-    ("tFoJq", "L'épopée maritime portugaise", "Livre audio", "Prix libre", "tFoJq"),
+    ("6YWyV", "Portugal — Là où finit la terre, là où commence l'horizon", "Ebook", "2,99 €", "6YWyV"),
+    ("tFoJq", "L'épopée maritime portugaise", "Livre audio", "3,99 €", "tFoJq"),
 ]
 
 

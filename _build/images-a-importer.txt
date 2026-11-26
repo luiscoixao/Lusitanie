@@ -1,5 +1,0 @@
-gg-cruzada.png https://commons.wikimedia.org/wiki/Special:FilePath/Elementos_da_Cruzada_das_Mulheres_Portuguesas_e_o_seu_estandarte.png
-gg-sintra-grippe.png https://commons.wikimedia.org/wiki/Special:FilePath/Visita_do_provedor_da_Miseric%C3%B3rdia_de_Cintra_ao_hospital_provis%C3%B3rio_estabelecido_n%E2%80%99aquela_vila_para_debelar_a_epidemia_pneum%C3%B3nica_e_que_prestou_servi%C3%A7os_importantes_-_Ilustra%C3%A7%C3%A3o_Portugueza_%2823Dez1918%29.png
-gg-ricardo-jorge.jpg https://commons.wikimedia.org/wiki/Special:FilePath/Ricardo_Jorge.jpg
-gg-capi.jpg https://commons.wikimedia.org/wiki/Special:FilePath/CAPI_obus_15mm.jpg
-gg-stokes.jpg https://commons.wikimedia.org/wiki/Special:FilePath/PortugueseLoadingStokesMortarWesternFront.jpg
